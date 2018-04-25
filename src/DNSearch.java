@@ -1,9 +1,8 @@
 import org.xbill.DNS.*;
+
 import java.net.*;
 import java.io.*;
-import java.nio.Buffer;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class DNSearch {
 
@@ -12,15 +11,17 @@ public class DNSearch {
     private static Resolver res;
     private static String OldName = name;
     private static String[] Buffer;
-    private static String[] fin;
+    private static String[] finalAnswerTypeA;
+    private static String[] Aliases;
 
-    public static String Search(String host) throws TextParseException, UnknownHostException {
+
+    private static String Search(String host) throws TextParseException, UnknownHostException {
         try {
             String[] DomainLevel = host.split("\\.");
             int count = 0;
             Record[] records;
             res = new SimpleResolver("8.8.8.8");
-          //  Thread.sleep(5000);
+            Thread.sleep(0);
             for (int level = DomainLevel.length - 1; level >= 0; level--) {
                 count++;
                 System.out.println("_____________STEP:_"+count+"_______________________________");
@@ -51,22 +52,19 @@ public class DNSearch {
                     canonicalName.run();
                     if (canonicalName.getResult() == Lookup.SUCCESSFUL){
                         records = new Lookup(name, Type.CNAME).run();
+                        Aliases = new String[records.length];
                         for (int i = records.length-1; i >=0 ; i--) {
                             CNAMERecord CN = (CNAMERecord) records[i];
                             InetAddress addr = Address.getByName(String.valueOf(CN.getTarget()));
                             BufferNS = String.valueOf(CN.getTarget());
                             System.out.println(addr);
                         }
-
                     }
                     else {
-                        int flex = 0;
+                        int NotRecursion = 0;
                         for (int i = 0; i < Buffer.length; i++){
-                       //     System.out.println("Not CNAME Buffer: " + Buffer[i]);
-                        //    System.out.println("Not CNAME name: " + name);
-                         //   System.out.println(Buffer.length);
                         if (Buffer[i].equals(name)){
-                            flex++;
+                            NotRecursion++;
                             Lookup Fin = new Lookup(name, Type.A);
                             records = Fin.run();
                             ARecord ARec = (ARecord) records[0];
@@ -74,7 +72,9 @@ public class DNSearch {
                             System.out.println(answer);
                             }
                         }
-                        if (flex == 0){
+                        if (NotRecursion == 0){
+                            if (Buffer[0].contains("dns.ripn.net")||Buffer[0].contains("nstld.com"))
+                                return host;
                             System.out.println("_____________RECURSION_COMMING____________");
                             Search(Buffer[0]);
                         }
@@ -83,50 +83,53 @@ public class DNSearch {
             }
             Lookup ReturnAndFin = new Lookup(OldName, Type.A);
             records = ReturnAndFin.run();
-            fin = new String[records.length];
+            finalAnswerTypeA = new String[records.length];
             for (int i = records.length-1; i >= 0 ; i--) {
                 ARecord ARec = (ARecord) records[i];
                 InetAddress answer = ARec.getAddress();
-                fin[i] = answer.toString();
+                finalAnswerTypeA[i] = answer.toString();
             }
 
         } catch (UncheckedIOException io) {
-
+                System.out.println("UncheckedIOException");
         } catch (TextParseException e) {
             e.printStackTrace();
         } catch (UnknownHostException e) {
             e.printStackTrace();
         } catch (NullPointerException e) {
-            System.out.println("Blyat");
+            System.out.println("NullPointerException");
+        } catch (StackOverflowError e) {
+                System.out.println("Non-existent domain or host of domain is not exist");
+                return host;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
         return host;
     }
     public static void main(String[] args) throws IOException{
-        OldName = "www.google.com";
-        Search(OldName);
-        System.out.println("_________________ANSWER_________________");
-        for (int i = 0; i < fin.length; i++)
-        System.out.println(fin[i]);
-        System.out.println("__________________TEST_________________");
-        InetAddress inetAddress = InetAddress.getByName(OldName);
-        System.out.println(inetAddress);
-        //Добавить список адресов типа а в конце, если их несколько
-        // www.google.com. иногда странные адреса
-        // www.microsoft.com. тоже 50 на 50
+        try {
+            Scanner in = new Scanner(System.in);
+            System.out.println("Enter URL: ");
+            OldName = in.next();
+            InetAddress inetAddress = InetAddress.getByName("google.com");
+            for (int i = 0; i < 3; i++) {
+                if (inetAddress.isReachable(1000)) {
+                    Search(OldName);
+                    System.out.println("_________________ANSWER_________________");
+                    for (i = 0; i < finalAnswerTypeA.length; i++)
+                        System.out.println(finalAnswerTypeA[i]);
+                    System.out.println("__________________TEST_________________");
+                    inetAddress = InetAddress.getByName(OldName);
+                    System.out.println(inetAddress);
+                    break;
+                }
+                else {
+                    System.out.println("No internet connection");
+                }
+            }
+        }
+        catch (NullPointerException e){
+            System.out.println("Non-existent domain or host of domain is not exist");
+        }
     }
 }
-
-/*
-lookup.setResolver(Resolver resolver)
-* www.pisem.net - разобрать
-* server *root*
-* type=ns
-* net.
-*type=a
-*server *net.*
-* type= ns
-* pisem.net.
-* (рекурсия)
-* ns3.itmm.ru.
-* ns делать до самого конца, а только в самом конце.
-* */
