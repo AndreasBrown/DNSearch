@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import javafx.scene.effect.*?>
 <?import java.net.*?>
 <?import javafx.scene.image.*?>
@@ -30,7 +31,7 @@
             </Menu>
          </menus>
       </MenuBar>
-      <AnchorPane fx:id="tool" prefHeight="53.0" prefWidth="600.0">
+      <AnchorPane fx:id="tool" prefHeight="53.0" prefWidth="600.0" stylesheets="@style.css">
          <children>
             <ProgressBar layoutX="307.0" layoutY="14.0" prefHeight="23.0" prefWidth="104.0" progress="0.0" AnchorPane.leftAnchor="312.0" AnchorPane.rightAnchor="166.0" />
             <Button layoutY="6.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" text="Button" AnchorPane.leftAnchor="10.0" />
@@ -43,8 +44,14 @@
             <Label layoutX="424.0" layoutY="15.0" text="0%" AnchorPane.rightAnchor="140.0" />
          </children>
          <effect>
-            <InnerShadow blurType="GAUSSIAN" height="25.0" radius="6.5" width="3.0" />
+            <InnerShadow blurType="GAUSSIAN" color="#0000004e" height="35.77" radius="8.4425" width="0.0" />
          </effect>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
       </AnchorPane>
       <AnchorPane prefHeight="318.0" prefWidth="600.0" VBox.vgrow="ALWAYS">
          <children>
