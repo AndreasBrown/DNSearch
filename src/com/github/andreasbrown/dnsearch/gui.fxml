@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import java.net.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.andreasbrown.dnsearch.Controller">
+   <children>
+      <MenuBar>
+         <menus>
+            <Menu mnemonicParsing="false" text="File">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Close" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Edit">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Delete" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Help">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="About" />
+               </items>
+            </Menu>
+         </menus>
+      </MenuBar>
+      <AnchorPane fx:id="tool" prefHeight="53.0" prefWidth="600.0">
+         <children>
+            <ProgressBar layoutX="307.0" layoutY="14.0" prefHeight="23.0" prefWidth="104.0" progress="0.0" AnchorPane.leftAnchor="312.0" AnchorPane.rightAnchor="166.0" />
+            <Button layoutY="6.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" text="Button" AnchorPane.leftAnchor="10.0" />
+            <Button layoutX="49.0" layoutY="6.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" text="Button" AnchorPane.leftAnchor="60.0" />
+            <Button layoutX="89.0" layoutY="6.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" text="Button" AnchorPane.leftAnchor="110.0" />
+            <Button layoutX="143.0" layoutY="6.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" text="Button" AnchorPane.leftAnchor="160.0" />
+            <Button layoutX="194.0" layoutY="6.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" text="Button" AnchorPane.leftAnchor="210.0" />
+            <Button layoutX="252.0" layoutY="6.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" text="Button" AnchorPane.leftAnchor="260.0" />
+            <Button alignment="CENTER" layoutX="145.0" layoutY="1.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="114.0" text="Help" AnchorPane.rightAnchor="10.0" />
+            <Label layoutX="424.0" layoutY="15.0" text="0%" AnchorPane.rightAnchor="140.0" />
+         </children>
+         <effect>
+            <InnerShadow blurType="GAUSSIAN" height="25.0" radius="6.5" width="3.0" />
+         </effect>
+      </AnchorPane>
+      <AnchorPane prefHeight="318.0" prefWidth="600.0" VBox.vgrow="ALWAYS">
+         <children>
+            <VBox prefHeight="317.0" prefWidth="388.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="212.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <AnchorPane fx:id="URL" maxHeight="1.7976931348623157E308" maxWidth="400.0" prefHeight="46.0" prefWidth="308.0" VBox.vgrow="ALWAYS">
+                     <children>
+                        <TextField fx:id="field" prefHeight="31.0" prefWidth="110.0" promptText="Enter URL" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="155.0" AnchorPane.topAnchor="0.0" />
+                        <Button mnemonicParsing="false" onAction="#StartSearch" prefHeight="30.0" prefWidth="67.0" text="Search" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="0.0">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Button>
+                     </children>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="10.0" />
+                     </padding>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="286.0" prefWidth="388.0" VBox.vgrow="ALWAYS" />
+               </children>
+            </VBox>
+            <VBox layoutX="376.0" layoutY="4.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="317.0" prefWidth="224.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="376.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <AnchorPane fx:id="anchacc" maxWidth="400.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="313.0" prefWidth="102.0" VBox.vgrow="ALWAYS">
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="RIGHT" nodeOrientation="LEFT_TO_RIGHT" text="Used servers" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="0.0">
+                           <padding>
+                              <Insets left="20.0" />
+                           </padding>
+                        </Label>
+                        <Accordion fx:id="servers" layoutX="1.0" layoutY="28.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="268.0" prefWidth="223.0" AnchorPane.bottomAnchor="21.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="28.0">
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                           <panes>
+                              <TitledPane fx:id="server1" prefHeight="0.0" prefWidth="180.0" text="Сервер 1">
+                                 <content>
+                                    <AnchorPane fx:id="container" minHeight="0.0" minWidth="0.0" prefHeight="227.0" prefWidth="211.0">
+                                       <children>
+                                          <Label fx:id="TTL" text="TTL" AnchorPane.leftAnchor="-10.0" AnchorPane.topAnchor="-12.0">
+                                             <font>
+                                                <Font size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="domain" alignment="CENTER" layoutX="7.0" layoutY="1.0" text="root" AnchorPane.leftAnchor="7.0" AnchorPane.rightAnchor="7.399999999999977" AnchorPane.topAnchor="-10.0">
+                                             <font>
+                                                <Font size="9.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="Types" alignment="CENTER" layoutX="4.2" layoutY="7.0" prefHeight="2.0" prefWidth="187.0" text="Server type/Query type" AnchorPane.leftAnchor="-3.0" AnchorPane.rightAnchor="3.0">
+                                             <font>
+                                                <Font size="8.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="ns" alignment="TOP_CENTER" layoutX="5.2" layoutY="22.0" prefHeight="24.0" prefWidth="220.0" text="nameserver/ip" AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="0.0">
+                                             <font>
+                                                <Font size="8.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                                 <font>
+                                    <Font size="9.0" />
+                                 </font>
+                              </TitledPane>
+                              <TitledPane fx:id="server2" opacity="0.0" prefHeight="0.0" prefWidth="180.0" text="Сервер 2">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="227.0" prefWidth="211.0">
+                                       <children>
+                                          <Label fx:id="TTL1" text="TTL" AnchorPane.leftAnchor="-10.0" AnchorPane.topAnchor="-12.0">
+                                             <font>
+                                                <Font size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="domain1" alignment="CENTER" layoutX="92.0" layoutY="4.0" text="root" AnchorPane.leftAnchor="7.0" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="-10.0">
+                                             <font>
+                                                <Font size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="Types1" alignment="CENTER" layoutX="7.0" layoutY="25.0" prefHeight="21.0" prefWidth="197.0" text="Server type/Query type" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                             <font>
+                                                <Font size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="ns1" alignment="CENTER" layoutX="36.0" layoutY="13.0" prefHeight="21.0" prefWidth="197.0" text="nameserver/ip" AnchorPane.leftAnchor="-3.0" AnchorPane.rightAnchor="3.0">
+                                             <font>
+                                                <Font size="12.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                                 <font>
+                                    <Font size="9.0" />
+                                 </font>
+                              </TitledPane>
+                              <TitledPane fx:id="server3" opacity="0.0" prefHeight="0.0" prefWidth="180.0" text="Сервер 3">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="227.0" prefWidth="211.0">
+                                       <children>
+                                          <Label fx:id="TTL2" text="TTL" AnchorPane.leftAnchor="-10.0" AnchorPane.topAnchor="-12.0">
+                                             <font>
+                                                <Font size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="domain2" alignment="CENTER" layoutX="92.0" layoutY="4.0" text="root" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-10.0">
+                                             <font>
+                                                <Font size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="Types2" alignment="CENTER" layoutX="7.0" layoutY="25.0" prefHeight="21.0" prefWidth="197.0" text="Server type/Query type" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                             <font>
+                                                <Font size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="ns2" alignment="CENTER" layoutX="36.0" layoutY="13.0" prefHeight="21.0" prefWidth="197.0" text="nameserver/ip" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                             <font>
+                                                <Font size="12.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                                 <font>
+                                    <Font size="9.0" />
+                                 </font>
+                              </TitledPane>
+                              <TitledPane fx:id="server4" opacity="0.0" prefHeight="0.0" prefWidth="180.0" text="Сервер 4">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="227.0" prefWidth="211.0">
+                                       <children>
+                                          <Label fx:id="TTL3" text="TTL" AnchorPane.leftAnchor="-10.0" AnchorPane.topAnchor="-12.0">
+                                             <font>
+                                                <Font size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="domain3" alignment="CENTER" layoutX="92.0" layoutY="4.0" text="root" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-10.0">
+                                             <font>
+                                                <Font size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="Types3" alignment="CENTER" layoutX="7.0" layoutY="25.0" prefHeight="21.0" prefWidth="197.0" text="Server type/Query type" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                             <font>
+                                                <Font size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="ns3" alignment="CENTER" layoutX="36.0" layoutY="13.0" prefHeight="21.0" prefWidth="197.0" text="nameserver/ip" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                             <font>
+                                                <Font size="12.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                                 <font>
+                                    <Font size="9.0" />
+                                 </font>
+                              </TitledPane>
+                              <TitledPane fx:id="server5" opacity="0.0" prefHeight="0.0" prefWidth="180.0" text="Сервер 5">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="227.0" prefWidth="211.0">
+                                       <children>
+                                          <Label fx:id="TTL4" text="TTL" AnchorPane.leftAnchor="-10.0" AnchorPane.topAnchor="-12.0">
+                                             <font>
+                                                <Font size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="domain4" alignment="CENTER" layoutX="92.0" layoutY="4.0" text="root" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-10.0">
+                                             <font>
+                                                <Font size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="Types4" alignment="CENTER" layoutX="7.0" layoutY="25.0" prefHeight="21.0" prefWidth="197.0" text="Server type/Query type" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                             <font>
+                                                <Font size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="ns4" alignment="CENTER" layoutX="36.0" layoutY="13.0" prefHeight="21.0" prefWidth="197.0" text="nameserver/ip" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                             <font>
+                                                <Font size="12.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                                 <font>
+                                    <Font size="9.0" />
+                                 </font>
+                              </TitledPane>
+                              <TitledPane fx:id="server6" opacity="0.0" prefHeight="0.0" prefWidth="180.0" text="Сервер 6">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="227.0" prefWidth="211.0">
+                                       <children>
+                                          <Label fx:id="TTL5" text="TTL" AnchorPane.leftAnchor="-10.0" AnchorPane.topAnchor="-12.0">
+                                             <font>
+                                                <Font size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="domain5" alignment="CENTER" layoutX="92.0" layoutY="4.0" text="root" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-7.0">
+                                             <font>
+                                                <Font size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="ns5" alignment="CENTER" layoutX="36.0" layoutY="13.0" prefHeight="21.0" prefWidth="197.0" text="nameserver/ip" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                             <font>
+                                                <Font size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="Types5" alignment="CENTER" layoutX="36.2" layoutY="28.0" prefHeight="21.0" prefWidth="197.0" text="Server type/Query type" AnchorPane.leftAnchor="36.2" AnchorPane.rightAnchor="35.7999999999999">
+                                             <font>
+                                                <Font size="12.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                                 <font>
+                                    <Font size="9.0" />
+                                 </font>
+                              </TitledPane>
+                              <TitledPane fx:id="server7" opacity="0.0" prefHeight="0.0" prefWidth="180.0" text="Сервер 7">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="227.0" prefWidth="211.0">
+                                       <children>
+                                          <Label fx:id="TTL6" text="TTL" AnchorPane.leftAnchor="-10.0" AnchorPane.topAnchor="-12.0">
+                                             <font>
+                                                <Font size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="domain6" alignment="CENTER" layoutX="92.0" layoutY="4.0" text="root" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-10.0">
+                                             <font>
+                                                <Font size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="Types6" alignment="CENTER" layoutX="7.0" layoutY="25.0" prefHeight="21.0" prefWidth="197.0" text="Server type/Query type" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                             <font>
+                                                <Font size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="ns6" alignment="CENTER" layoutX="36.0" layoutY="13.0" prefHeight="21.0" prefWidth="197.0" text="nameserver/ip" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                             <font>
+                                                <Font size="12.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                                 <font>
+                                    <Font size="9.0" />
+                                 </font>
+                              </TitledPane>
+                              <TitledPane fx:id="server8" opacity="0.0" prefHeight="0.0" prefWidth="180.0" text="Сервер 8">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="227.0" prefWidth="211.0">
+                                       <children>
+                                          <Label fx:id="TTL7" text="TTL" AnchorPane.leftAnchor="-10.0" AnchorPane.topAnchor="-12.0">
+                                             <font>
+                                                <Font size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="domain7" alignment="CENTER" layoutX="92.0" layoutY="4.0" text="root" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-10.0">
+                                             <font>
+                                                <Font size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="Types7" alignment="CENTER" layoutX="7.0" layoutY="25.0" prefHeight="21.0" prefWidth="197.0" text="Server type/Query type" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                             <font>
+                                                <Font size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="ns7" alignment="CENTER" layoutX="36.0" layoutY="13.0" prefHeight="21.0" prefWidth="197.0" text="nameserver/ip" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                             <font>
+                                                <Font size="12.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                                 <font>
+                                    <Font size="9.0" />
+                                 </font>
+                              </TitledPane>
+                              <TitledPane fx:id="server9" opacity="0.0" prefHeight="0.0" prefWidth="180.0" text="Сервер 9">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="227.0" prefWidth="211.0">
+                                       <children>
+                                          <Label fx:id="TTL8" text="TTL" AnchorPane.leftAnchor="-10.0" AnchorPane.topAnchor="-12.0">
+                                             <font>
+                                                <Font size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="domain8" alignment="CENTER" layoutX="92.0" layoutY="4.0" text="root" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-10.0">
+                                             <font>
+                                                <Font size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="Types8" alignment="CENTER" layoutX="7.0" layoutY="25.0" prefHeight="21.0" prefWidth="197.0" text="Server type/Query type" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                             <font>
+                                                <Font size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="ns8" alignment="CENTER" layoutX="36.0" layoutY="13.0" prefHeight="21.0" prefWidth="197.0" text="nameserver/ip" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                             <font>
+                                                <Font size="12.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                                 <font>
+                                    <Font size="9.0" />
+                                 </font>
+                              </TitledPane>
+                           </panes>
+                        </Accordion>
+                        <Label fx:id="Answer" alignment="CENTER" layoutX="56.0" layoutY="293.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="15.0" prefWidth="164.0" text="Текущий запрос/ответ" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="56.0" />
+                     </children>
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
+                  </AnchorPane>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+   </children>
+</VBox>
