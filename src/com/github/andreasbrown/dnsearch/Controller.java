@@ -11,6 +11,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import sun.plugin.cache.OldCacheEntry;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -123,6 +125,8 @@ public class Controller {
     private VBox VBOXCan;
     @FXML
     public static Button StepBack;
+    @FXML
+    public static ProgressBar progressBar;
 
     public static long time = 0;
     public static List<TitledPane> ServerList = new ArrayList<>();
@@ -134,7 +138,7 @@ public class Controller {
     public static int oldCount = count;
     public static int oldBranch = branch;
     public static int flag= -1;
-    public static int flag2= -1;
+    public static int flag2= 0;
 
 
 
@@ -187,6 +191,7 @@ public class Controller {
             TTLs.add(TTL6);
             TTLs.add(TTL7);
             TTLs.add(TTL8);
+            progressBar.setProgress(0);
 
             for (int i = 0; i < 9; i++) {
                 ServerList.get(i).setFont(Font.font(servers.getHeight() / 40));
@@ -225,6 +230,9 @@ public class Controller {
                 String url = String.valueOf(field.getCharacters());
                 time = System.currentTimeMillis();
                 String result = DNSearch.main(url);
+                progressBar.progressProperty().unbind();
+                progressBar.progressProperty().bind(DNSearch.main(url).progressProperty());
+
                 if (result == "Non-existent domain or host of domain is not exist") {
                     Answer.setText("Non-existent domain or host of domain is not exist");
                     return;
@@ -483,11 +491,12 @@ public class Controller {
         }
     }
     public void StepForward(ActionEvent actionEvent) {
-        int sumOfServers = oldCount+oldBranch;
         if (DNSearch.stop != 1) {
             if (rec.size() == 0 || ((count < oldCount-3)&& count !=0)   ) {
                 if (count < oldCount)
                     count++;
+                System.out.println("here un: "+count);
+
                 for (int i = 0; i < 9; i++)
                     ServerList.get(i).setOpacity(0);
                 for (int i = 0; i < count + 1; i++) {
@@ -496,6 +505,8 @@ public class Controller {
                     drawing(context);
                 }
             } else if (count == 0) {
+                System.out.println("ere un: "+count);
+
                 for (int i = 0; i < 9; i++)
                     ServerList.get(i).setOpacity(0);
                 for (int i = 0; i < count + 1; i++) {
@@ -504,45 +515,78 @@ public class Controller {
                 count++;
                 GraphicsContext context = canvas.getGraphicsContext2D();
                 drawing(context);
-            }//count-1+branch + 1 = cумм - branch+1
-            else if(oldBranch != 0 && branch < oldBranch){
+            }
+            else if (count == oldCount-1 && branch == oldBranch) {
+                System.out.println("here un: "+count);
+
+                count = oldCount;
+                branch = oldBranch;
+                for (int i = 0; i < 9; i++ )
+                    ServerList.get(i).setOpacity(0);
+                for (int i = 0; i < count+1; i++){
+                    ServerList.get(i).setOpacity(1);
+                    GraphicsContext context = canvas.getGraphicsContext2D();
+                    drawing(context);
+                    flag2=0;
+
+                }
+            }
+            else if(oldBranch != 0 && branch < oldBranch && count < oldCount-3){
+                System.out.println("here count: "+count);
 
                 if (flag != 0){
                     flag = 0;
                     //branch++;
                     count++;
+
+                }
+                count++;
+               // branch++;
+                for (int i = 0; i < 9; i++)
+                    ServerList.get(i).setOpacity(0);
+                for (int i = 0; i < count + 1; i++) {
+                    ServerList.get(i).setOpacity(1);
                 }
 
-                branch++;
-                System.out.println("here");
+                GraphicsContext context = canvas.getGraphicsContext2D();
+                drawing(context);
+
+            }
+            else if(count < oldCount || branch < oldBranch){
+
+                for (int i = 0; i < 9; i++)
+                    ServerList.get(i).setOpacity(0);
+                for (int i = 0; i < count + 1; i++) {
+                    ServerList.get(i).setOpacity(1);
+                }
+                System.out.println("hee un: "+count);
+
+                if (flag2 < 1){
+                    System.out.println("here co: "+count);
                     count++;
-                for (int i = 0; i < 9; i++)
-                    ServerList.get(i).setOpacity(0);
-                for (int i = 0; i < count + 1; i++) {
-                    ServerList.get(i).setOpacity(1);
+                    flag2++;
+                }
+                else {
+                if (count < oldCount - 2 ){
+                count++;
+
+                    System.out.println("here coun: "+count);
+                }
+                branch++;
+                if (count == oldCount - 1){   System.out.println("here con: "+count);
+                }
+                else {count++;}
+                if (flag2 == 1) {
+                    count--;
+                    flag2++;
+                }
                 }
 
                 GraphicsContext context = canvas.getGraphicsContext2D();
                 drawing(context);
 
             }
-            else if(count < oldCount){
-                for (int i = 0; i < 9; i++)
-                    ServerList.get(i).setOpacity(0);
-                for (int i = 0; i < count + 1; i++) {
-                    ServerList.get(i).setOpacity(1);
-                }
-                count++;
-                GraphicsContext context = canvas.getGraphicsContext2D();
-                drawing(context);
-            }
-            else if (count == oldCount && branch == oldBranch) {
-                count++;
-                for (int i = 0; i < count; i++) {
-                    ServerList.get(i).setOpacity(1);
-                }
-               // count--;
-            }
+
         }
 
     }
@@ -570,10 +614,11 @@ public class Controller {
 }
 /*
 *
+*
 *           canvas+-
 * progressbar
 *           buttons+
-* перемотка
+*           перемотка+-
 *           css+-
 *           иконка+
 */

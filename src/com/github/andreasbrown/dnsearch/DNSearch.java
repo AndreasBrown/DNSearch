@@ -43,6 +43,7 @@ public class DNSearch {
                 return "loooop";
             }
             for (int level = DomainLevel.length - 1; level >= 0; level--) {
+
                 if (stop == 1)
                     return "STOP";
                 count++;

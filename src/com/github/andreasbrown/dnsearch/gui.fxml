@@ -34,7 +34,7 @@
       </MenuBar>
       <AnchorPane fx:id="tool" prefHeight="53.0" prefWidth="600.0" stylesheets="@style.css">
          <children>
-            <ProgressBar layoutX="307.0" layoutY="14.0" prefHeight="23.0" prefWidth="104.0" progress="0.0" AnchorPane.leftAnchor="261.0" AnchorPane.rightAnchor="166.0" />
+            <ProgressBar fx:id="progressBar" layoutX="307.0" layoutY="14.0" prefHeight="23.0" prefWidth="104.0" progress="0.0" AnchorPane.leftAnchor="261.0" AnchorPane.rightAnchor="166.0" />
             <Button id="stepb" fx:id="StepBack" layoutY="6.0" mnemonicParsing="false" onAction="#StepBack" prefHeight="40.0" prefWidth="40.0" AnchorPane.leftAnchor="10.0" />
             <Button id="stop" layoutX="49.0" layoutY="6.0" mnemonicParsing="false" onAction="#Stop" prefHeight="40.0" prefWidth="40.0" AnchorPane.leftAnchor="60.0" />
             <Button id="play" layoutX="89.0" layoutY="6.0" mnemonicParsing="false" onAction="#Play" prefHeight="40.0" prefWidth="40.0" AnchorPane.leftAnchor="110.0" />
