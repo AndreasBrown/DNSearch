@@ -2,7 +2,23 @@
 
 }
 .button{
-    
+
+}
+
+#pause{
+    -fx-background-image: url("icons/pause.png");
+}
+#stepb{
+    -fx-background-image: url("icons/StepBack.png");
+}
+#stop{
+    -fx-background-image: url("icons/stop.png");
+}
+#play{
+    -fx-background-image: url("icons/play.png");
+}
+#stepforw{
+    -fx-background-image: url("icons/StepForw.png");
 }
 
 .label{

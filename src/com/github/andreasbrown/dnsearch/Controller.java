@@ -5,6 +5,8 @@ import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -119,6 +121,8 @@ public class Controller {
     private AnchorPane cANCPane;
     @FXML
     private VBox VBOXCan;
+    @FXML
+    public static Button StepBack;
 
     public static long time = 0;
     public static List<TitledPane> ServerList = new ArrayList<>();
@@ -127,9 +131,16 @@ public class Controller {
     public static List<Label> types = new ArrayList<>();
     public static List<Label> TTLs = new ArrayList<>();
     private static int levelsOfTree=0;
+    public static int oldCount = count;
+    public static int oldBranch = branch;
+    public static int flag= -1;
+    public static int flag2= -1;
+
+
 
     public void StartSearch(ActionEvent actionEvent) throws IOException {
         try {
+
             rec.clear();
             ServerList.add(server1);
             ServerList.add(server2);
@@ -218,7 +229,7 @@ public class Controller {
                     Answer.setText("Non-existent domain or host of domain is not exist");
                     return;
                 }
-                System.out.println(DNSearch.count);
+                //System.out.println(DNSearch.count);
                 for (int i = 0; i < DNSearch.count + 1; i++) {
                     ServerList.get(i).setOpacity(1);
                     if (i != DNSearch.count)
@@ -265,12 +276,20 @@ public class Controller {
             System.out.println("LevelsOfTree: "+levelsOfTree);
             if (branch==count)
                 branch=0;
+            oldCount = count;
+            oldBranch = branch;
+
+
             System.out.println("Branch: "+branch);
             System.out.println("count: "+count);
             System.out.println("Rec: "+rec.size());
+            System.out.println("oldCount: "+oldCount);
 
             GraphicsContext context = canvas.getGraphicsContext2D();
             drawing(context);
+            flag= 3;
+
+            Answer.setText("Succsess");
 
         } catch (NullPointerException e) {
             Answer.setText("Non-existent domain or host of domain is not exist");
@@ -289,12 +308,13 @@ public class Controller {
         canvas.setHeight(VBOXh[0]/1.1);
         canvas.setWidth(VBOXw[0]/1.2);
 
-        gc.setFill(Color.LIGHTGRAY);
-        gc.fillRect(0, 0, VBOXw[0], VBOXh[0]);
-        gc.setFill(Color.DARKCYAN);
+            gc.setFill(Color.rgb(244,244,244));
+            gc.fillRect(0, 0, VBOXw[0], VBOXh[0]);
+        gc.setFill(Color.BLACK);
+       if (ServerList.get(0).getOpacity() != 0)
         gc.fillRect(serverX[0], serverY[0],serverWidth[0],serverHeight[0]);
             if (branch == 0){
-                for (int i = 0; i < levelsOfTree-1; i++) {
+                for (int i = 0; i < count-branch; i++) {
                     gc.beginPath();
                     gc.moveTo(serverX[0]+serverWidth[0]/2, serverY[0]+serverHeight[0]);
                     gc.lineTo(serverX[0]+serverWidth[0]/2, serverY[0] +2* serverHeight[0]);
@@ -304,6 +324,34 @@ public class Controller {
                     gc.fillRect(serverX[0], serverY[0],serverWidth[0],serverHeight[0]);
 
                 }
+                }
+            else if(rec.size() == 1){
+                for (int i = 0; i <= count-branch; i++){
+                    gc.beginPath();
+                    gc.moveTo(serverX[0], serverY[0]+serverHeight[0]);
+                    gc.lineTo(serverX[0]-serverWidth[0], serverY[0] + 1.5*serverHeight[0]);
+                    gc.stroke();
+                    gc.closePath();
+                    serverY[0]+= 1.5*serverHeight[0];
+                    serverX[0]-= 2*serverWidth[0];
+                    gc.fillRect(serverX[0], serverY[0],serverWidth[0],serverHeight[0]);
+                }
+                serverX[0] = Math.round((canvas.getWidth()/2-serverWidth[0]));
+                serverY[0] = Math.round((canvas.getHeight()/levelsOfTree-serverHeight[0]))/4;
+
+                for (int i = 0; i < branch; i++){
+                    gc.beginPath();
+                    gc.moveTo(serverX[0]+serverWidth[0], serverY[0]+serverHeight[0]);
+                    gc.lineTo(serverX[0]+2*serverWidth[0], serverY[0] + 1.5*serverHeight[0]);
+                    gc.stroke();
+                    gc.closePath();
+                    serverY[0]+= 1.5*serverHeight[0];
+                    serverX[0]+= 2*serverWidth[0];
+                    gc.fillRect(serverX[0], serverY[0],serverWidth[0],serverHeight[0]);
+
+                }
+
+                //System.out.println("serverX: "+serverX[0]+" serverY: "+serverY[0]);
             }
                  VBOXCan.layoutBoundsProperty().addListener((observable, oldValue, newValue) -> {
                      VBOXh[0] = newValue.getHeight();
@@ -317,9 +365,10 @@ public class Controller {
                      gc.setFill(Color.rgb(244,244,244));
                      gc.fillRect(0, 0, VBOXw[0], VBOXh[0]);
                      gc.setFill(Color.BLACK);
+                     if (ServerList.get(0).getOpacity() != 0)
                      gc.fillRect(serverX[0], serverY[0],serverWidth[0],serverHeight[0]);
                      if (branch == 0){
-                         for (int i = 0; i < levelsOfTree-1; i++) {
+                         for (int i = 0; i < count; i++) {
                              gc.beginPath();
                              gc.moveTo(serverX[0]+serverWidth[0]/2, serverY[0]+serverHeight[0]);
                              gc.lineTo(serverX[0]+serverWidth[0]/2, serverY[0] +2* serverHeight[0]);
@@ -383,13 +432,148 @@ public class Controller {
 
                      }
                  });
+    }
 
+    public void StepBack(ActionEvent actionEvent){
+
+        if (DNSearch.stop != 1) {
+            if(rec.size() == 0 && count== oldCount)
+                flag=0;
+            if ((rec.size() == 0) || (count == oldCount) || (branch == 0)) {
+                if (count >= 0 )
+                    if (flag != 1)
+                    count--;
+                for (int i = 0; i < 9; i++)
+                    ServerList.get(i).setOpacity(0);
+                    if (flag ==0){
+                        count--;}
+                for (int i = 0; i < count+1; i++) {
+                    ServerList.get(i).setOpacity(1);
+                  }
+                if (flag ==0){
+                    count++;}
+                GraphicsContext context = canvas.getGraphicsContext2D();
+                drawing(context);
+            }
+            else{
+            if (branch>0){
+                flag = 1;
+                branch--;
+                count--;}
+                if (branch == 0){
+                    count++;
+                    flag = 0;
+
+
+                }
+
+            System.out.println("count: "+count);
+            for (int i = 0; i < 9; i++)
+                ServerList.get(i).setOpacity(0);
+                if (flag == 0 )
+                    count--;
+                for (int i = 0; i < count+1; i++) {
+                ServerList.get(i).setOpacity(1);
+            }
+            if (flag == 0)
+                count++;
+            GraphicsContext context = canvas.getGraphicsContext2D();
+            drawing(context);
+            }
+        }
+    }
+    public void StepForward(ActionEvent actionEvent) {
+        int sumOfServers = oldCount+oldBranch;
+        if (DNSearch.stop != 1) {
+            if (rec.size() == 0 || ((count < oldCount-3)&& count !=0)   ) {
+                if (count < oldCount)
+                    count++;
+                for (int i = 0; i < 9; i++)
+                    ServerList.get(i).setOpacity(0);
+                for (int i = 0; i < count + 1; i++) {
+                    ServerList.get(i).setOpacity(1);
+                    GraphicsContext context = canvas.getGraphicsContext2D();
+                    drawing(context);
+                }
+            } else if (count == 0) {
+                for (int i = 0; i < 9; i++)
+                    ServerList.get(i).setOpacity(0);
+                for (int i = 0; i < count + 1; i++) {
+                    ServerList.get(i).setOpacity(1);
+                }
+                count++;
+                GraphicsContext context = canvas.getGraphicsContext2D();
+                drawing(context);
+            }//count-1+branch + 1 = cумм - branch+1
+            else if(oldBranch != 0 && branch < oldBranch){
+
+                if (flag != 0){
+                    flag = 0;
+                    //branch++;
+                    count++;
+                }
+
+                branch++;
+                System.out.println("here");
+                    count++;
+                for (int i = 0; i < 9; i++)
+                    ServerList.get(i).setOpacity(0);
+                for (int i = 0; i < count + 1; i++) {
+                    ServerList.get(i).setOpacity(1);
+                }
+
+                GraphicsContext context = canvas.getGraphicsContext2D();
+                drawing(context);
+
+            }
+            else if(count < oldCount){
+                for (int i = 0; i < 9; i++)
+                    ServerList.get(i).setOpacity(0);
+                for (int i = 0; i < count + 1; i++) {
+                    ServerList.get(i).setOpacity(1);
+                }
+                count++;
+                GraphicsContext context = canvas.getGraphicsContext2D();
+                drawing(context);
+            }
+            else if (count == oldCount && branch == oldBranch) {
+                count++;
+                for (int i = 0; i < count; i++) {
+                    ServerList.get(i).setOpacity(1);
+                }
+               // count--;
+            }
+        }
+
+    }
+    public void Play(ActionEvent actionEvent){
+        DNSearch.stop = 0;
+        count = oldCount;
+        branch = oldBranch;
+        for (int i = 0; i < 9; i++ )
+            ServerList.get(i).setOpacity(0);
+        for (int i = 0; i < count+1; i++){
+            ServerList.get(i).setOpacity(1);
+            GraphicsContext context = canvas.getGraphicsContext2D();
+            drawing(context);
+
+
+        }
+    }
+
+    public void Pause(ActionEvent actionEvent){
+        DNSearch.stop = 0;
+    }
+    public void Stop(ActionEvent actionEvent){
+        DNSearch.stop = 1;
     }
 }
 /*
 *
-* canvas
+*           canvas+-
 * progressbar
-* buttons
-* css
+*           buttons+
+* перемотка
+*           css+-
+*           иконка+
 */

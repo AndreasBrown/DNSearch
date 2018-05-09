@@ -23,6 +23,9 @@ public class DNSearch {
     public static long[] ttl = new long[64];
     public static int branch = 0;
     public static List<Integer> rec = new ArrayList<>();
+    public static int pause = 0;
+    public static int stop = 0;
+
 
 
     public static String Search(String host) throws TextParseException, UnknownHostException {
@@ -40,6 +43,8 @@ public class DNSearch {
                 return "loooop";
             }
             for (int level = DomainLevel.length - 1; level >= 0; level--) {
+                if (stop == 1)
+                    return "STOP";
                 count++;
                 branch++;
                 nameservers = "";

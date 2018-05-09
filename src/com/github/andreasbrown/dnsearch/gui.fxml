@@ -34,13 +34,12 @@
       </MenuBar>
       <AnchorPane fx:id="tool" prefHeight="53.0" prefWidth="600.0" stylesheets="@style.css">
          <children>
-            <ProgressBar layoutX="307.0" layoutY="14.0" prefHeight="23.0" prefWidth="104.0" progress="0.0" AnchorPane.leftAnchor="312.0" AnchorPane.rightAnchor="166.0" />
-            <Button layoutY="6.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" text="Button" AnchorPane.leftAnchor="10.0" />
-            <Button layoutX="49.0" layoutY="6.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" text="Button" AnchorPane.leftAnchor="60.0" />
-            <Button layoutX="89.0" layoutY="6.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" text="Button" AnchorPane.leftAnchor="110.0" />
-            <Button layoutX="143.0" layoutY="6.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" text="Button" AnchorPane.leftAnchor="160.0" />
-            <Button layoutX="194.0" layoutY="6.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" text="Button" AnchorPane.leftAnchor="210.0" />
-            <Button layoutX="252.0" layoutY="6.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" text="Button" AnchorPane.leftAnchor="260.0" />
+            <ProgressBar layoutX="307.0" layoutY="14.0" prefHeight="23.0" prefWidth="104.0" progress="0.0" AnchorPane.leftAnchor="261.0" AnchorPane.rightAnchor="166.0" />
+            <Button id="stepb" fx:id="StepBack" layoutY="6.0" mnemonicParsing="false" onAction="#StepBack" prefHeight="40.0" prefWidth="40.0" AnchorPane.leftAnchor="10.0" />
+            <Button id="stop" layoutX="49.0" layoutY="6.0" mnemonicParsing="false" onAction="#Stop" prefHeight="40.0" prefWidth="40.0" AnchorPane.leftAnchor="60.0" />
+            <Button id="play" layoutX="89.0" layoutY="6.0" mnemonicParsing="false" onAction="#Play" prefHeight="40.0" prefWidth="40.0" AnchorPane.leftAnchor="110.0" />
+            <Button id="pause" layoutX="143.0" layoutY="6.0" mnemonicParsing="false" onAction="#Pause" prefHeight="40.0" prefWidth="40.0" AnchorPane.leftAnchor="160.0" />
+            <Button id="stepforw" layoutX="194.0" layoutY="6.0" mnemonicParsing="false" onAction="#StepForward" prefHeight="40.0" prefWidth="40.0" AnchorPane.leftAnchor="210.0" />
             <Button alignment="CENTER" layoutX="145.0" layoutY="1.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="114.0" text="Help" AnchorPane.rightAnchor="10.0" />
             <Label layoutX="424.0" layoutY="15.0" text="0%" AnchorPane.rightAnchor="140.0" />
          </children>
@@ -372,7 +371,7 @@
                               </TitledPane>
                            </panes>
                         </Accordion>
-                        <Label fx:id="Answer" alignment="CENTER" layoutX="56.0" layoutY="293.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="15.0" prefWidth="164.0" text="Текущий запрос/ответ" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="56.0" />
+                        <Label fx:id="Answer" alignment="CENTER" layoutX="56.0" layoutY="293.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="15.0" prefWidth="164.0" text="Status of search" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="56.0" />
                      </children>
                      <VBox.margin>
                         <Insets top="5.0" />
