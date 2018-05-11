@@ -127,7 +127,7 @@ public class DNSearch {
                         if (Buffer[0].contains("dns.ripn.net") || Buffer[0].contains("nstld.com"))
                             return host;
                         System.out.println("_____________RECURSION_COMMING____________");
-                        rec.add(branch);
+                        rec.add(branch-1);
                         branch = 0;
                         Servers.remove("");
                         count--;
@@ -168,12 +168,16 @@ public class DNSearch {
     }
     public static String main(String host) throws IOException{
         try {
-            count = 0;
+            count = 1;
             branch = 0;
             OldName = host;
             InetAddress inetAddress = InetAddress.getByName("google.com");
             for (int i = 0; i < 3; i++) {
                 if (inetAddress.isReachable(1000)) {
+                    domains[count]="Root";
+                    Servers.add("l.root-servers.net/199.7.83.42");
+                    QueryTypes[count] = "root";
+                    ttl[count] = 0;
                     Search(OldName);
                     System.out.println("_________________ANSWER_________________");
                     for (i = 0; i < finalAnswerTypeA.length; i++)

@@ -139,11 +139,12 @@ public class Controller {
     public static int oldBranch = branch;
     public static int flag= -1;
     public static int flag2= 0;
-
+    private static int[] oldBranches = new int[5];
 
 
     public void StartSearch(ActionEvent actionEvent) throws IOException {
         try {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
 
             rec.clear();
             ServerList.add(server1);
@@ -191,7 +192,7 @@ public class Controller {
             TTLs.add(TTL6);
             TTLs.add(TTL7);
             TTLs.add(TTL8);
-            progressBar.setProgress(0);
+            //progressBar.setProgress(0);
 
             for (int i = 0; i < 9; i++) {
                 ServerList.get(i).setFont(Font.font(servers.getHeight() / 40));
@@ -223,6 +224,10 @@ public class Controller {
                 } else {
                     eng = false;
                     Answer.setText("Non-existent domain or host of domain is not exist");
+                    alert.setTitle("Fail search");
+                    alert.setHeaderText("Non-existent domain or host of domain is not exist");
+                    alert.setContentText("Check the correctness of the entered URL. Maybe there is a space.");
+                    alert.showAndWait();
                     break;
                 }
             }
@@ -230,11 +235,23 @@ public class Controller {
                 String url = String.valueOf(field.getCharacters());
                 time = System.currentTimeMillis();
                 String result = DNSearch.main(url);
-                progressBar.progressProperty().unbind();
-                progressBar.progressProperty().bind(DNSearch.main(url).progressProperty());
+              //  progressBar.progressProperty().unbind();
+             //   progressBar.progressProperty().bind(DNSearch.main(url).progressProperty());
 
                 if (result == "Non-existent domain or host of domain is not exist") {
                     Answer.setText("Non-existent domain or host of domain is not exist");
+                    alert.setTitle("Fail search");
+                    alert.setHeaderText("Non-existent domain or host of domain is not exist");
+                    alert.setContentText("Check the correctness of the entered URL. Maybe there is a space.");
+                    alert.showAndWait();
+                    return;
+                }
+                if (result == "No internet connection"){
+                    Answer.setText("No internet connection");
+                    alert.setTitle("Fail search");
+                    alert.setHeaderText("No internet connection");
+                    alert.setContentText("Check the internet connection");
+                    alert.showAndWait();
                     return;
                 }
                 //System.out.println(DNSearch.count);
@@ -277,10 +294,11 @@ public class Controller {
                 TTLs.get(DNSearch.count).setText("TTL: " + DNSearch.ttl[DNSearch.count]);
             }
 //            System.out.println("count: "+ count+ " branch: "+ branch);
-
-            if (count+1-branch>= branch)
-                levelsOfTree =  count+1-branch+1;
-            else levelsOfTree = branch+1;
+            if (rec.size()!=2){
+            if (count-branch>= branch)
+                levelsOfTree =  count-branch+1;
+            else levelsOfTree = branch+1;}
+            else levelsOfTree = count + 1 - rec.get(0)-rec.get(1);
             System.out.println("LevelsOfTree: "+levelsOfTree);
             if (branch==count)
                 branch=0;
@@ -291,304 +309,410 @@ public class Controller {
             System.out.println("Branch: "+branch);
             System.out.println("count: "+count);
             System.out.println("Rec: "+rec.size());
-            System.out.println("oldCount: "+oldCount);
+            System.out.println("root: "+Domains.get(0).getText());
 
             GraphicsContext context = canvas.getGraphicsContext2D();
             drawing(context);
-            flag= 3;
+            flag= 0;
 
             Answer.setText("Succsess");
 
         } catch (NullPointerException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
             Answer.setText("Non-existent domain or host of domain is not exist");
-        } catch (IndexOutOfBoundsException e) {
+            alert.setTitle("Fail search");
+            alert.setHeaderText("Non-existent domain or host of domain is not exist");
+            alert.setContentText("Check the correctness of the entered URL. Maybe there is a space.");
+            alert.showAndWait();
+        }
+        catch (IndexOutOfBoundsException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
             Answer.setText("Non-existent domain or host of domain is not exist");
+            alert.setTitle("Fail search");
+            alert.setHeaderText("Non-existent domain or host of domain is not exist");
+            alert.setContentText("Check the correctness of the entered URL. Maybe there is a space.");
+            alert.showAndWait();
         }
     }
         private void drawing(GraphicsContext gc) {
         final double[] VBOXh = {VBOXCan.getHeight()};
         final double[] VBOXw = {VBOXCan.getWidth()};
-        final double[] serverHeight = {(canvas.getHeight() / 7 )};
+        final double[] serverHeight = {Math.round(canvas.getHeight() / (2.5 * levelsOfTree))};
         final double[] serverWidth = {(canvas.getWidth() / 19 )};
         final double[] serverX = {(Math.round((canvas.getWidth()/2-serverWidth[0])))};
         final double[] serverY = {(Math.round((canvas.getHeight()/levelsOfTree-serverHeight[0]))/4)};
 
-        canvas.setHeight(VBOXh[0]/1.1);
+        canvas.setHeight(VBOXh[0]/1.2);
         canvas.setWidth(VBOXw[0]/1.2);
+                 gc.setFont(new Font("Sans-Serif", servers.getHeight() / 55));
+                 gc.setFill(Color.rgb(244,244,244));
+                 gc.fillRect(0, 0, VBOXw[0], VBOXh[0]);
 
-            gc.setFill(Color.rgb(244,244,244));
-            gc.fillRect(0, 0, VBOXw[0], VBOXh[0]);
-        gc.setFill(Color.BLACK);
-       if (ServerList.get(0).getOpacity() != 0)
-        gc.fillRect(serverX[0], serverY[0],serverWidth[0],serverHeight[0]);
-            if (branch == 0){
-                for (int i = 0; i < count-branch; i++) {
+            if (rec.size() == 0){
+                for (int i = 0; i < count; i++) {
+                    if (i == 0){
+                        gc.strokeRect(serverX[0], serverY[0], serverWidth[0], serverHeight[0]);
+                        gc.setFill(Color.BLACK);
+                        gc.fillText(Domains.get(i).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
+                    }
+                    else {
+                        gc.beginPath();
+                        gc.moveTo(serverX[0]+serverWidth[0]/2, serverY[0]+serverHeight[0]);
+                        gc.lineTo(serverX[0]+serverWidth[0]/2, serverY[0] +2* serverHeight[0]);
+                        gc.stroke();
+                        gc.closePath();
+                        serverY[0]+= Math.round(2*serverHeight[0]);
+                        gc.strokeRect(serverX[0], serverY[0],serverWidth[0],serverHeight[0]);
+                        gc.setFill(Color.BLACK);
+                        if (Domains.get(i).getText().length() > 10){
+                            String domain = Domains.get(i).getText();
+                            domain =  domain.replaceFirst("\\.",".\n");
+                            gc.fillText(domain,serverX[0]+serverWidth[0]/10,serverY[0]+serverHeight[0]/3,serverWidth[0]/10*9  );
+                        }
+                        else {
+                        gc.fillText(Domains.get(i).getText(),serverX[0]+serverWidth[0]/4,serverY[0]+serverHeight[0]/2,serverWidth[0]/4*3);
+                        }
+                    }
+                }
+            }
+            else if (rec.size() == 1) {
+                for (int i = 0; i < count; i++) {
+                    if (i >= count - branch) {
+                        continue;
+                    }
+                    else {
+                        if (i == 0) {
+                            gc.strokeRect(serverX[0], serverY[0], serverWidth[0], serverHeight[0]);
+                            gc.setFill(Color.BLACK);
+                            gc.fillText(Domains.get(i).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
+                        } else {
+                            gc.beginPath();
+                            gc.moveTo(serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0]);
+                            gc.lineTo(serverX[0] - serverWidth[0] / 2, serverY[0] + 2 * serverHeight[0]);
+                            gc.stroke();
+                            gc.closePath();
+                            serverX[0] -= serverWidth[0];
+                            serverY[0] += Math.round(2 * serverHeight[0]);
+                            gc.strokeRect(serverX[0], serverY[0], serverWidth[0], serverHeight[0]);
+                            gc.setFill(Color.BLACK);
+
+                            if (Domains.get(i).getText().length() > 10) {
+                                String domain = Domains.get(i).getText();
+                                domain = domain.replaceFirst("\\.", ".\n");
+                                gc.fillText(domain, serverX[0] + serverWidth[0] / 10, serverY[0] + serverHeight[0] / 3, serverWidth[0] / 10 * 9);
+                            } else {
+                                gc.fillText(Domains.get(i).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
+                            }
+
+                        }
+                    }
+                }
+                double oldX = serverX[0];
+                double oldY = serverY[0];
+
+                serverX[0] = (Math.round((canvas.getWidth()/2-serverWidth[0])));
+                serverY[0] = (Math.round((canvas.getHeight()/levelsOfTree-serverHeight[0]))/4);
+                for (int i = count-branch; i < branch+(count-branch); i++){
+                    gc.beginPath();
+                    gc.moveTo(serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0]);
+                    gc.lineTo(serverX[0] + serverWidth[0]*1.5, serverY[0] + 2 * serverHeight[0]);
+                    gc.stroke();
+                    gc.closePath();
+                    serverX[0] += serverWidth[0];
+                    serverY[0] += Math.round(2 * serverHeight[0]);
+                    gc.strokeRect(serverX[0], serverY[0], serverWidth[0], serverHeight[0]);
+                    gc.setFill(Color.BLACK);
+                if(count == oldCount) {
+                    if (Domains.get(i).getText().length() > 10) {
+                        String domain = Domains.get(i).getText();
+                        domain = domain.replaceFirst("\\.", ".\n");
+                        gc.fillText(domain, serverX[0] + serverWidth[0] / 10, serverY[0] + serverHeight[0] / 3, serverWidth[0] / 10 * 9);
+                    } else {
+                        gc.fillText(Domains.get(i).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
+                    }
+                }
+                else {
+                    if (Domains.get(i+1).getText().length() > 10) {
+                        String domain = Domains.get(i+1).getText();
+                        domain = domain.replaceFirst("\\.", ".\n");
+                        gc.fillText(domain, serverX[0] + serverWidth[0] / 10, serverY[0] + serverHeight[0] / 3, serverWidth[0] / 10 * 9);
+                    } else {
+                        gc.fillText(Domains.get(i+1).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
+                    }
+                }
+
+                }
+                serverX[0]= oldX;
+                serverY[0]= oldY;
+
+                gc.beginPath();
+                gc.moveTo(serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0]);
+                gc.lineTo(serverX[0] - serverWidth[0] / 2, serverY[0] + 2 * serverHeight[0]);
+                gc.stroke();
+                gc.closePath();
+                serverX[0] -= serverWidth[0];
+                serverY[0] += Math.round(2 * serverHeight[0]);
+                gc.strokeRect(serverX[0], serverY[0], serverWidth[0], serverHeight[0]);
+                gc.setFill(Color.BLACK);
+                if (count == oldCount) {
+                    if (Domains.get(count).getText().length() > 10) {
+                        String domain = Domains.get(count).getText();
+                        domain = domain.replaceFirst("\\.", ".\n");
+                        gc.fillText(domain, serverX[0] + serverWidth[0] / 10, serverY[0] + serverHeight[0] / 3, serverWidth[0] / 10 * 9);
+                    } else {
+                        gc.fillText(Domains.get(count).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
+                    }
+
+                }
+                 else {
+                   if (Domains.get(count-branch).getText().length() > 10) {
+                        String domain = Domains.get(count-branch).getText();
+                        domain = domain.replaceFirst("\\.", ".\n");
+                        gc.fillText(domain, serverX[0] + serverWidth[0] / 10, serverY[0] + serverHeight[0] / 3, serverWidth[0] / 10 * 9);
+                    } else {
+                        gc.fillText(Domains.get(count-branch).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
+                    }
+                }
+            }
+            else if (rec.size() == 2){
+                for (int i = 0; i < count; i++) {
+                    if (i >= count - rec.get(0)-rec.get(1)) {
+                        continue;
+                    } else {
+                        if (i == 0) {
+                            gc.strokeRect(serverX[0], serverY[0], serverWidth[0], serverHeight[0]);
+                            gc.setFill(Color.BLACK);
+                            gc.fillText(Domains.get(i).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
+                        } else {
+                            gc.beginPath();
+                            gc.moveTo(serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0]);
+                            gc.lineTo(serverX[0] - serverWidth[0], serverY[0] + 2 * serverHeight[0]);
+                            gc.stroke();
+                            gc.closePath();
+                            serverX[0] -= 1.5*serverWidth[0];
+                            serverY[0] += Math.round(2 * serverHeight[0]);
+                            gc.strokeRect(serverX[0], serverY[0], serverWidth[0], serverHeight[0]);
+                            gc.setFill(Color.BLACK);
+
+                            if (Domains.get(i).getText().length() > 10) {
+                                String domain = Domains.get(i).getText();
+                                domain = domain.replaceFirst("\\.", ".\n");
+                                gc.fillText(domain, serverX[0] + serverWidth[0] / 10, serverY[0] + serverHeight[0] / 3, serverWidth[0] / 10 * 9);
+                            } else {
+                                gc.fillText(Domains.get(i).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
+                            }
+                        }
+                    }
+
+                }
+                double oldX = serverX[0];
+                double oldY = serverY[0];
+                serverX[0] = (Math.round((canvas.getWidth()/2-serverWidth[0])));
+                serverY[0] = (Math.round((canvas.getHeight()/levelsOfTree-serverHeight[0]))/4);
+                for (int i = count-rec.get(0)-rec.get(1); i < count-rec.get(1); i ++){
                     gc.beginPath();
                     gc.moveTo(serverX[0]+serverWidth[0]/2, serverY[0]+serverHeight[0]);
                     gc.lineTo(serverX[0]+serverWidth[0]/2, serverY[0] +2* serverHeight[0]);
                     gc.stroke();
                     gc.closePath();
                     serverY[0]+= Math.round(2*serverHeight[0]);
-                    gc.fillRect(serverX[0], serverY[0],serverWidth[0],serverHeight[0]);
+                    gc.strokeRect(serverX[0], serverY[0],serverWidth[0],serverHeight[0]);
+                    gc.setFill(Color.BLACK);
+                    if (Domains.get(i).getText().length() > 10){
+                        String domain = Domains.get(i).getText();
+                        domain =  domain.replaceFirst("\\.",".\n");
+                        gc.fillText(domain,serverX[0]+serverWidth[0]/10,serverY[0]+serverHeight[0]/3,serverWidth[0]/10*9  );
+                    }
+                    else {
+                        gc.fillText(Domains.get(i).getText(),serverX[0]+serverWidth[0]/4,serverY[0]+serverHeight[0]/2,serverWidth[0]/4*3);
+                    }
+                }
+                serverX[0] = (Math.round((canvas.getWidth()/2-serverWidth[0])));
+                serverY[0] = (Math.round((canvas.getHeight()/levelsOfTree-serverHeight[0]))/4);
+                int j = count+rec.get(0)-rec.get(1);
+                System.out.println("count+rec.get(0)-rec.get(1): "+j);
+                System.out.println("count: "+count);
 
-                }
-                }
-            else if(rec.size() == 1){
-                for (int i = 0; i <= count-branch; i++){
+                for (int i = count-rec.get(0); i < count; i ++) {
                     gc.beginPath();
-                    gc.moveTo(serverX[0], serverY[0]+serverHeight[0]);
-                    gc.lineTo(serverX[0]-serverWidth[0], serverY[0] + 1.5*serverHeight[0]);
+                    gc.moveTo(serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0]);
+                    gc.lineTo(serverX[0] + serverWidth[0]*2, serverY[0] + 2 * serverHeight[0]);
                     gc.stroke();
                     gc.closePath();
-                    serverY[0]+= 1.5*serverHeight[0];
-                    serverX[0]-= 2*serverWidth[0];
-                    gc.fillRect(serverX[0], serverY[0],serverWidth[0],serverHeight[0]);
-                }
-                serverX[0] = Math.round((canvas.getWidth()/2-serverWidth[0]));
-                serverY[0] = Math.round((canvas.getHeight()/levelsOfTree-serverHeight[0]))/4;
+                    serverX[0] += 1.5*serverWidth[0];
+                    serverY[0] += Math.round(2 * serverHeight[0]);
+                    gc.strokeRect(serverX[0], serverY[0], serverWidth[0], serverHeight[0]);
+                    gc.setFill(Color.BLACK);
 
-                for (int i = 0; i < branch; i++){
-                    gc.beginPath();
-                    gc.moveTo(serverX[0]+serverWidth[0], serverY[0]+serverHeight[0]);
-                    gc.lineTo(serverX[0]+2*serverWidth[0], serverY[0] + 1.5*serverHeight[0]);
-                    gc.stroke();
-                    gc.closePath();
-                    serverY[0]+= 1.5*serverHeight[0];
-                    serverX[0]+= 2*serverWidth[0];
-                    gc.fillRect(serverX[0], serverY[0],serverWidth[0],serverHeight[0]);
+                    if (Domains.get(i).getText().length() > 10) {
+                        String domain = Domains.get(i).getText();
+                        domain = domain.replaceFirst("\\.", ".\n");
+                        gc.fillText(domain, serverX[0] + serverWidth[0] / 10, serverY[0] + serverHeight[0] / 3, serverWidth[0] / 10 * 9);
+                    } else {
+                        gc.fillText(Domains.get(i).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
+                    }
+
+
 
                 }
+                serverX[0]= oldX;
+                serverY[0]= oldY;
+                gc.beginPath();
+                gc.moveTo(serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0]);
+                gc.lineTo(serverX[0] - serverWidth[0] / 2, serverY[0] + 2 * serverHeight[0]);
+                gc.stroke();
+                gc.closePath();
+                serverX[0] -= serverWidth[0];
+                serverY[0] += Math.round(2 * serverHeight[0]);
+                gc.strokeRect(serverX[0], serverY[0], serverWidth[0], serverHeight[0]);
+                gc.setFill(Color.BLACK);
 
-                //System.out.println("serverX: "+serverX[0]+" serverY: "+serverY[0]);
+                if (Domains.get(count).getText().length() > 10) {
+                    String domain = Domains.get(count).getText();
+                    domain = domain.replaceFirst("\\.", ".\n");
+                    gc.fillText(domain, serverX[0] + serverWidth[0] / 10, serverY[0] + serverHeight[0] / 3, serverWidth[0] / 10 * 9);
+                } else {
+                    gc.fillText(Domains.get(count).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
+                }
             }
-                 VBOXCan.layoutBoundsProperty().addListener((observable, oldValue, newValue) -> {
+
+            //onresize
+            VBOXCan.layoutBoundsProperty().addListener((observable, oldValue, newValue) -> {
                      VBOXh[0] = newValue.getHeight();
                      VBOXw[0] = newValue.getWidth();
-                     canvas.setHeight(VBOXh[0]/1.2);
-                     canvas.setWidth(VBOXw[0]/1.2);
-                     serverX[0] = Math.round((canvas.getWidth()/2-serverWidth[0]));
-                     serverY[0] = Math.round((canvas.getHeight()/levelsOfTree-serverHeight[0]))/4;
-                     serverHeight[0] = Math.round(canvas.getHeight() / (2.5*levelsOfTree) );
-                     serverWidth[0] = Math.round(canvas.getWidth() / 19 );
-                     gc.setFill(Color.rgb(244,244,244));
+                     canvas.setHeight(VBOXh[0] / 1.2);
+                     canvas.setWidth(VBOXw[0] / 1.2);
+                     serverX[0] = Math.round((canvas.getWidth() / 2 - serverWidth[0]));
+                     serverY[0] = Math.round((canvas.getHeight() / levelsOfTree - serverHeight[0])) / 4;
+                     serverHeight[0] = Math.round(canvas.getHeight() / (2.5 * levelsOfTree));
+                     serverWidth[0] = Math.round(canvas.getWidth() / 19);
+                     gc.setFont(new Font("Sans-Serif", newValue.getHeight() / 55));
+                     gc.setFill(Color.rgb(244, 244, 244));
                      gc.fillRect(0, 0, VBOXw[0], VBOXh[0]);
-                     gc.setFill(Color.BLACK);
-                     if (ServerList.get(0).getOpacity() != 0)
-                     gc.fillRect(serverX[0], serverY[0],serverWidth[0],serverHeight[0]);
-                     if (branch == 0){
-                         for (int i = 0; i < count; i++) {
-                             gc.beginPath();
-                             gc.moveTo(serverX[0]+serverWidth[0]/2, serverY[0]+serverHeight[0]);
-                             gc.lineTo(serverX[0]+serverWidth[0]/2, serverY[0] +2* serverHeight[0]);
-                             gc.stroke();
-                             gc.closePath();
-                             serverY[0]+= Math.round(2*serverHeight[0]);
-                             gc.fillRect(serverX[0], serverY[0],serverWidth[0],serverHeight[0]);
-                         }
-                     }
-                     else if(rec.size() == 1){
-                         for (int i = 0; i <= count-branch; i++){
-                             gc.beginPath();
-                             gc.moveTo(serverX[0], serverY[0]+serverHeight[0]);
-                             gc.lineTo(serverX[0]-serverWidth[0], serverY[0] + 1.5*serverHeight[0]);
-                             gc.stroke();
-                             gc.closePath();
-                             serverY[0]+= 1.5*serverHeight[0];
-                             serverX[0]-= 2*serverWidth[0];
-                             gc.fillRect(serverX[0], serverY[0],serverWidth[0],serverHeight[0]);
-                         }
-                         serverX[0] = Math.round((canvas.getWidth()/2-serverWidth[0]));
-                         serverY[0] = Math.round((canvas.getHeight()/levelsOfTree-serverHeight[0]))/4;
-
-                         for (int i = 0; i < branch; i++){
-                             gc.beginPath();
-                             gc.moveTo(serverX[0]+serverWidth[0], serverY[0]+serverHeight[0]);
-                             gc.lineTo(serverX[0]+2*serverWidth[0], serverY[0] + 1.5*serverHeight[0]);
-                             gc.stroke();
-                             gc.closePath();
-                             serverY[0]+= 1.5*serverHeight[0];
-                             serverX[0]+= 2*serverWidth[0];
-                             gc.fillRect(serverX[0], serverY[0],serverWidth[0],serverHeight[0]);
-
-                         }
-
-                         //System.out.println("serverX: "+serverX[0]+" serverY: "+serverY[0]);
-                     }
-                     else if (rec.size() >=2){
-                         float[] koef = {-1, (float) 0.5, 2};
-                         serverX[0] = Math.round((canvas.getWidth()/2-serverWidth[0]));
-                         serverY[0] = Math.round((canvas.getHeight()/levelsOfTree-serverHeight[0]))/4;
-                         rec.add(count-branch+1);
-                         int f=0;
-                         for (int i = rec.size()-1; i >= 0; i--){
-                             for(int j = 0; j < rec.get(i); j++ ){
-                                 gc.beginPath();
-                                 gc.moveTo(serverX[0]+serverWidth[0]/2, serverY[0]+serverHeight[0]);
-                                 gc.lineTo(serverX[0]+serverWidth[0]*koef[f], serverY[0] + 1.5*serverHeight[0]);
-                                 gc.stroke();
-                                 gc.closePath();
-                                 serverY[0]+= 1.5*serverHeight[0];
-                                 serverX[0]-= koef[f]*serverWidth[0];
-                                 gc.fillRect(serverX[0], serverY[0],serverWidth[0],serverHeight[0]);
 
 
-                             }
-                             serverX[0] = Math.round((canvas.getWidth()/2-serverWidth[0]));
-                             serverY[0] = Math.round((canvas.getHeight()/levelsOfTree-serverHeight[0]))/4;
-                             f++;
-                         }
+                     //draw
+                    if (rec.size() == 0){
+                        for (int i = 0; i < count; i++) {
+                            if (i == 0){
+                                gc.strokeRect(serverX[0], serverY[0], serverWidth[0], serverHeight[0]);
+                                gc.setFill(Color.BLACK);
+                                gc.fillText(Domains.get(i).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
+                        }
+                            else {
+                                gc.beginPath();
+                                gc.moveTo(serverX[0]+serverWidth[0]/2, serverY[0]+serverHeight[0]);
+                                gc.lineTo(serverX[0]+serverWidth[0]/2, serverY[0] +2* serverHeight[0]);
+                                gc.stroke();
+                                gc.closePath();
+                                serverY[0]+= Math.round(2*serverHeight[0]);
+                                gc.strokeRect(serverX[0], serverY[0],serverWidth[0],serverHeight[0]);
+                                gc.setFill(Color.BLACK);
+                                if (Domains.get(i).getText().length() > 10){
+                                    String domain = Domains.get(i).getText();
+                                    domain =  domain.replaceFirst("\\.",".\n");
+                                    gc.fillText(domain,serverX[0]+serverWidth[0]/10,serverY[0]+serverHeight[0]/3,serverWidth[0]/10*9  );
+                                }
+                                else {
+                                    gc.fillText(Domains.get(i).getText(),serverX[0]+serverWidth[0]/4,serverY[0]+serverHeight[0]/2,serverWidth[0]/4*3);
+                                }
+                            }
+                        }
+                    }
 
-                     }
+
+
                  });
     }
-
-    public void StepBack(ActionEvent actionEvent){
-
-        if (DNSearch.stop != 1) {
-            if(rec.size() == 0 && count== oldCount)
-                flag=0;
-            if ((rec.size() == 0) || (count == oldCount) || (branch == 0)) {
-                if (count >= 0 )
-                    if (flag != 1)
-                    count--;
-                for (int i = 0; i < 9; i++)
-                    ServerList.get(i).setOpacity(0);
-                    if (flag ==0){
-                        count--;}
-                for (int i = 0; i < count+1; i++) {
-                    ServerList.get(i).setOpacity(1);
-                  }
-                if (flag ==0){
-                    count++;}
-                GraphicsContext context = canvas.getGraphicsContext2D();
-                drawing(context);
-            }
-            else{
-            if (branch>0){
-                flag = 1;
-                branch--;
-                count--;}
-                if (branch == 0){
-                    count++;
-                    flag = 0;
-
-
-                }
-
-            System.out.println("count: "+count);
-            for (int i = 0; i < 9; i++)
-                ServerList.get(i).setOpacity(0);
-                if (flag == 0 )
-                    count--;
-                for (int i = 0; i < count+1; i++) {
-                ServerList.get(i).setOpacity(1);
-            }
-            if (flag == 0)
-                count++;
+    public void StepBack(ActionEvent actionEvent) {
+        if (rec.size() == 0) {
             GraphicsContext context = canvas.getGraphicsContext2D();
             drawing(context);
+            count--;
+            for (int i = 0; i < 9; i++)
+                ServerList.get(i).setOpacity(0);
+            for (int i = 0; i < count + 1; i++) {
+                ServerList.get(i).setOpacity(1);
+
+            }
+
+        } else if (rec.size() == 1) {
+            if (count == oldCount) {
+                count--;
+                GraphicsContext context = canvas.getGraphicsContext2D();
+                drawing(context);
+                for (int i = 0; i < 9; i++)
+                    ServerList.get(i).setOpacity(0);
+                for (int i = 0; i < count + 1; i++) {
+                    ServerList.get(i).setOpacity(1);
+                }
+            }
+            else if (branch != 0){
+                branch--;
+                count--;
+                GraphicsContext context = canvas.getGraphicsContext2D();
+                drawing(context);
+                for (int i = 0; i < 9; i++)
+                    ServerList.get(i).setOpacity(0);
+                for (int i = 0; i < count + 1; i++) {
+                    ServerList.get(i).setOpacity(1);
+                }
+
+            }
+            else {
+                if (count >= 0){
+                    for(int i = 0; i < rec.size();i++){
+                        oldBranches[i] = rec.get(i);
+                    }
+                    rec.clear();
+
+                    GraphicsContext context = canvas.getGraphicsContext2D();
+                    drawing(context);
+                count--;
+                for (int i = 0; i < 9; i++)
+                    ServerList.get(i).setOpacity(0);
+                for (int i = 0; i < count + 1; i++) {
+                    ServerList.get(i).setOpacity(1);
+                }
+                }
+            }
+        }
+        else if(rec.size() == 2){
+            if (count == oldCount){
+                count--;
+                GraphicsContext context = canvas.getGraphicsContext2D();
+                drawing(context);
+                for (int i = 0; i < 9; i++)
+                    ServerList.get(i).setOpacity(0);
+                for (int i = 0; i < count + 1; i++) {
+                    ServerList.get(i).setOpacity(1);
+                }
+            }
+            else if(rec.get(1)>-1){
+            rec.set(1,rec.get(1)-1);//ВОТ ЗДЕСЬ ХЗ
+            if (flag == 0) {
+                count--;
+                flag=1;
+            }
+            else if(flag==1)
+                flag=0;
+
+            GraphicsContext context = canvas.getGraphicsContext2D();
+            drawing(context);
+
+            for (int i = 0; i < 9; i++)
+                ServerList.get(i).setOpacity(0);
+            for (int i = 0; i < count + 1; i++) {
+                ServerList.get(i).setOpacity(1);
+                }
+            }
+            else {
+                rec.remove(1);
             }
         }
     }
+
     public void StepForward(ActionEvent actionEvent) {
-        if (DNSearch.stop != 1) {
-            if (rec.size() == 0 || ((count < oldCount-3)&& count !=0)   ) {
-                if (count < oldCount)
-                    count++;
-                System.out.println("here un: "+count);
-
-                for (int i = 0; i < 9; i++)
-                    ServerList.get(i).setOpacity(0);
-                for (int i = 0; i < count + 1; i++) {
-                    ServerList.get(i).setOpacity(1);
-                    GraphicsContext context = canvas.getGraphicsContext2D();
-                    drawing(context);
-                }
-            } else if (count == 0) {
-                System.out.println("ere un: "+count);
-
-                for (int i = 0; i < 9; i++)
-                    ServerList.get(i).setOpacity(0);
-                for (int i = 0; i < count + 1; i++) {
-                    ServerList.get(i).setOpacity(1);
-                }
-                count++;
-                GraphicsContext context = canvas.getGraphicsContext2D();
-                drawing(context);
-            }
-            else if (count == oldCount-1 && branch == oldBranch) {
-                System.out.println("here un: "+count);
-
-                count = oldCount;
-                branch = oldBranch;
-                for (int i = 0; i < 9; i++ )
-                    ServerList.get(i).setOpacity(0);
-                for (int i = 0; i < count+1; i++){
-                    ServerList.get(i).setOpacity(1);
-                    GraphicsContext context = canvas.getGraphicsContext2D();
-                    drawing(context);
-                    flag2=0;
-
-                }
-            }
-            else if(oldBranch != 0 && branch < oldBranch && count < oldCount-3){
-                System.out.println("here count: "+count);
-
-                if (flag != 0){
-                    flag = 0;
-                    //branch++;
-                    count++;
-
-                }
-                count++;
-               // branch++;
-                for (int i = 0; i < 9; i++)
-                    ServerList.get(i).setOpacity(0);
-                for (int i = 0; i < count + 1; i++) {
-                    ServerList.get(i).setOpacity(1);
-                }
-
-                GraphicsContext context = canvas.getGraphicsContext2D();
-                drawing(context);
-
-            }
-            else if(count < oldCount || branch < oldBranch){
-
-                for (int i = 0; i < 9; i++)
-                    ServerList.get(i).setOpacity(0);
-                for (int i = 0; i < count + 1; i++) {
-                    ServerList.get(i).setOpacity(1);
-                }
-                System.out.println("hee un: "+count);
-
-                if (flag2 < 1){
-                    System.out.println("here co: "+count);
-                    count++;
-                    flag2++;
-                }
-                else {
-                if (count < oldCount - 2 ){
-                count++;
-
-                    System.out.println("here coun: "+count);
-                }
-                branch++;
-                if (count == oldCount - 1){   System.out.println("here con: "+count);
-                }
-                else {count++;}
-                if (flag2 == 1) {
-                    count--;
-                    flag2++;
-                }
-                }
-
-                GraphicsContext context = canvas.getGraphicsContext2D();
-                drawing(context);
-
-            }
-
-        }
-
     }
     public void Play(ActionEvent actionEvent){
         DNSearch.stop = 0;
@@ -615,10 +739,5 @@ public class Controller {
 /*
 *
 *
-*           canvas+-
-* progressbar
-*           buttons+
-*           перемотка+-
-*           css+-
-*           иконка+
+*
 */
