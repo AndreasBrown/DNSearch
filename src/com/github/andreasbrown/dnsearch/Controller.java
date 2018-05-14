@@ -278,7 +278,7 @@ public class Controller {
                 for (int i = 0; i < DNSearch.count; i++) {
                     Domains.get(i).setText(DNSearch.domains[i + 1]);
                     NameServers.get(i).setText("             Nameservers: \n" + Servers.get(i));
-                    types.get(i).setText("Query type: " + DNSearch.QueryTypes[i + 1]);
+                    types.get(i).setText("Query type: " + DNSearch.QueryTypes[i + 1]+ "      Server type: Authority");
                     TTLs.get(i).setText("TTL:" + DNSearch.ttl[i]);
 
                 }
@@ -353,7 +353,7 @@ public class Controller {
                     if (i == 0){
                         gc.strokeRect(serverX[0], serverY[0], serverWidth[0], serverHeight[0]);
                         gc.setFill(Color.BLACK);
-                        gc.fillText(Domains.get(i).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
+                        gc.fillText((i + 1) + ": " +Domains.get(i).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
                     }
                     else {
                         gc.beginPath();
@@ -367,10 +367,10 @@ public class Controller {
                         if (Domains.get(i).getText().length() > 10){
                             String domain = Domains.get(i).getText();
                             domain =  domain.replaceFirst("\\.",".\n");
-                            gc.fillText(domain,serverX[0]+serverWidth[0]/10,serverY[0]+serverHeight[0]/3,serverWidth[0]/10*9  );
+                            gc.fillText((i + 1) + ": " +domain,serverX[0]+serverWidth[0]/10,serverY[0]+serverHeight[0]/3,serverWidth[0]/10*9  );
                         }
                         else {
-                        gc.fillText(Domains.get(i).getText(),serverX[0]+serverWidth[0]/4,serverY[0]+serverHeight[0]/2,serverWidth[0]/4*3);
+                        gc.fillText((i + 1) + ": " +Domains.get(i).getText(),serverX[0]+serverWidth[0]/4,serverY[0]+serverHeight[0]/2,serverWidth[0]/4*3);
                         }
                     }
                 }
@@ -384,7 +384,7 @@ public class Controller {
                         if (i == 0) {
                             gc.strokeRect(serverX[0], serverY[0], serverWidth[0], serverHeight[0]);
                             gc.setFill(Color.BLACK);
-                            gc.fillText(Domains.get(i).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
+                            gc.fillText((i + 1) + ": " +Domains.get(i).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
                         } else {
                             gc.beginPath();
                             gc.moveTo(serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0]);
@@ -399,9 +399,9 @@ public class Controller {
                             if (Domains.get(i).getText().length() > 10) {
                                 String domain = Domains.get(i).getText();
                                 domain = domain.replaceFirst("\\.", ".\n");
-                                gc.fillText(domain, serverX[0] + serverWidth[0] / 10, serverY[0] + serverHeight[0] / 3, serverWidth[0] / 10 * 9);
+                                gc.fillText((i + 1) + ": " +domain, serverX[0] + serverWidth[0] / 10, serverY[0] + serverHeight[0] / 3, serverWidth[0] / 10 * 9);
                             } else {
-                                gc.fillText(Domains.get(i).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
+                                gc.fillText((i + 1) + ": " +Domains.get(i).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
                             }
 
                         }
@@ -426,18 +426,18 @@ public class Controller {
                     if (Domains.get(i).getText().length() > 10) {
                         String domain = Domains.get(i).getText();
                         domain = domain.replaceFirst("\\.", ".\n");
-                        gc.fillText(domain, serverX[0] + serverWidth[0] / 10, serverY[0] + serverHeight[0] / 3, serverWidth[0] / 10 * 9);
+                        gc.fillText((i + 1) + ": " +domain, serverX[0] + serverWidth[0] / 10, serverY[0] + serverHeight[0] / 3, serverWidth[0] / 10 * 9);
                     } else {
-                        gc.fillText(Domains.get(i).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
+                        gc.fillText((i + 1) + ": " +Domains.get(i).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
                     }
                 }
                 else {
                     if (Domains.get(i+1).getText().length() > 10) {
                         String domain = Domains.get(i+1).getText();
                         domain = domain.replaceFirst("\\.", ".\n");
-                        gc.fillText(domain, serverX[0] + serverWidth[0] / 10, serverY[0] + serverHeight[0] / 3, serverWidth[0] / 10 * 9);
+                        gc.fillText((i + 2) + ": " +domain, serverX[0] + serverWidth[0] / 10, serverY[0] + serverHeight[0] / 3, serverWidth[0] / 10 * 9);
                     } else {
-                        gc.fillText(Domains.get(i+1).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
+                        gc.fillText((i + 2) + ": " +Domains.get(i+1).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
                     }
                 }
 
@@ -458,9 +458,9 @@ public class Controller {
                     if (Domains.get(count).getText().length() > 10) {
                         String domain = Domains.get(count).getText();
                         domain = domain.replaceFirst("\\.", ".\n");
-                        gc.fillText(domain, serverX[0] + serverWidth[0] / 10, serverY[0] + serverHeight[0] / 3, serverWidth[0] / 10 * 9);
+                        gc.fillText((count + 1) + ": " +domain, serverX[0] + serverWidth[0] / 10, serverY[0] + serverHeight[0] / 3, serverWidth[0] / 10 * 9);
                     } else {
-                        gc.fillText(Domains.get(count).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
+                        gc.fillText((count + 1) + ": " +Domains.get(count).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
                     }
 
                 }
@@ -468,63 +468,85 @@ public class Controller {
                    if (Domains.get(count-branch).getText().length() > 10) {
                         String domain = Domains.get(count-branch).getText();
                         domain = domain.replaceFirst("\\.", ".\n");
-                        gc.fillText(domain, serverX[0] + serverWidth[0] / 10, serverY[0] + serverHeight[0] / 3, serverWidth[0] / 10 * 9);
+                        gc.fillText((count-branch + 1) + ": " +domain, serverX[0] + serverWidth[0] / 10, serverY[0] + serverHeight[0] / 3, serverWidth[0] / 10 * 9);
                     } else {
-                        gc.fillText(Domains.get(count-branch).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
+                        gc.fillText((count-branch + 1) + ": " +Domains.get(count-branch).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
                     }
                 }
             }
             else if (rec.size() == 2){
                 for (int i = 0; i < count; i++) {
                     if (i >= count - rec.get(0)-rec.get(1)) {
+                        System.out.println("left branch stop. Continue");
                         continue;
                     } else {
+                        System.out.println("left branch build");
                         if (i == 0) {
                             gc.strokeRect(serverX[0], serverY[0], serverWidth[0], serverHeight[0]);
                             gc.setFill(Color.BLACK);
-                            gc.fillText(Domains.get(i).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
+                            gc.fillText((i+1)+": "+Domains.get(i).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
                         } else {
                             gc.beginPath();
                             gc.moveTo(serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0]);
                             gc.lineTo(serverX[0] - serverWidth[0], serverY[0] + 2 * serverHeight[0]);
                             gc.stroke();
                             gc.closePath();
-                            serverX[0] -= 1.5*serverWidth[0];
+                            serverX[0] -= 1.5 * serverWidth[0];
                             serverY[0] += Math.round(2 * serverHeight[0]);
                             gc.strokeRect(serverX[0], serverY[0], serverWidth[0], serverHeight[0]);
                             gc.setFill(Color.BLACK);
-
-                            if (Domains.get(i).getText().length() > 10) {
-                                String domain = Domains.get(i).getText();
-                                domain = domain.replaceFirst("\\.", ".\n");
-                                gc.fillText(domain, serverX[0] + serverWidth[0] / 10, serverY[0] + serverHeight[0] / 3, serverWidth[0] / 10 * 9);
-                            } else {
-                                gc.fillText(Domains.get(i).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
+                            if (count == oldCount) {
+                                if (Domains.get(i).getText().length() > 8) {
+                                    String domain = Domains.get(i).getText();
+                                    domain = domain.replaceFirst("\\.", ".\n");
+                                    gc.fillText((i+1)+": "+domain, serverX[0] + serverWidth[0] / 10, serverY[0] + serverHeight[0] / 3, serverWidth[0] / 10 * 9);
+                                } else {
+                                    gc.fillText((i+1)+": "+Domains.get(i).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
+                                }
+                            }
+                            else {
+                                if (Domains.get(i).getText().length() > 8) {
+                                    String domain = Domains.get(i).getText();
+                                    domain = domain.replaceFirst("\\.", ".\n");
+                                    gc.fillText((i+1)+": "+domain, serverX[0] + serverWidth[0] / 10, serverY[0] + serverHeight[0] / 3, serverWidth[0] / 10 * 9);
+                                } else {
+                                    gc.fillText((i+1)+": "+Domains.get(i).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
+                                }
                             }
                         }
                     }
-
                 }
                 double oldX = serverX[0];
                 double oldY = serverY[0];
                 serverX[0] = (Math.round((canvas.getWidth()/2-serverWidth[0])));
                 serverY[0] = (Math.round((canvas.getHeight()/levelsOfTree-serverHeight[0]))/4);
-                for (int i = count-rec.get(0)-rec.get(1); i < count-rec.get(1); i ++){
+                for (int i = count-rec.get(0)-rec.get(1); i < count-rec.get(1); i ++) {
                     gc.beginPath();
-                    gc.moveTo(serverX[0]+serverWidth[0]/2, serverY[0]+serverHeight[0]);
-                    gc.lineTo(serverX[0]+serverWidth[0]/2, serverY[0] +2* serverHeight[0]);
+                    gc.moveTo(serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0]);
+                    gc.lineTo(serverX[0] + serverWidth[0] / 2, serverY[0] + 2 * serverHeight[0]);
                     gc.stroke();
                     gc.closePath();
-                    serverY[0]+= Math.round(2*serverHeight[0]);
-                    gc.strokeRect(serverX[0], serverY[0],serverWidth[0],serverHeight[0]);
+                    serverY[0] += Math.round(2 * serverHeight[0]);
+                    gc.strokeRect(serverX[0], serverY[0], serverWidth[0], serverHeight[0]);
                     gc.setFill(Color.BLACK);
-                    if (Domains.get(i).getText().length() > 10){
-                        String domain = Domains.get(i).getText();
-                        domain =  domain.replaceFirst("\\.",".\n");
-                        gc.fillText(domain,serverX[0]+serverWidth[0]/10,serverY[0]+serverHeight[0]/3,serverWidth[0]/10*9  );
+
+                    if (count == oldCount) {
+                        if (Domains.get(i).getText().length() > 8) {
+                            String domain = Domains.get(i).getText();
+                            domain = domain.replaceFirst("\\.", ".\n");
+                            gc.fillText((i + 1) + ": " + domain, serverX[0] + serverWidth[0] / 10, serverY[0] + serverHeight[0] / 3, serverWidth[0] / 10 * 9);
+                        } else {
+                            gc.fillText((i + 1) + ": " + Domains.get(i).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
+                        }
                     }
                     else {
-                        gc.fillText(Domains.get(i).getText(),serverX[0]+serverWidth[0]/4,serverY[0]+serverHeight[0]/2,serverWidth[0]/4*3);
+                        if (Domains.get(i+1).getText().length() > 8) {
+                            String domain = Domains.get(i+1).getText();
+                            domain = domain.replaceFirst("\\.", ".\n");
+                            gc.fillText((i + 2) + ": " + domain, serverX[0] + serverWidth[0] / 10, serverY[0] + serverHeight[0] / 3, serverWidth[0] / 10 * 9);
+                        } else {
+                            gc.fillText((i + 2) + ": " + Domains.get(i+1).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
+                        }
                     }
                 }
                 serverX[0] = (Math.round((canvas.getWidth()/2-serverWidth[0])));
@@ -533,7 +555,7 @@ public class Controller {
                 System.out.println("count+rec.get(0)-rec.get(1): "+j);
                 System.out.println("count: "+count);
 
-                for (int i = count-rec.get(0); i < count; i ++) {
+                for (int i = count-rec.get(1); i < count; i ++) {
                     gc.beginPath();
                     gc.moveTo(serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0]);
                     gc.lineTo(serverX[0] + serverWidth[0]*2, serverY[0] + 2 * serverHeight[0]);
@@ -543,17 +565,37 @@ public class Controller {
                     serverY[0] += Math.round(2 * serverHeight[0]);
                     gc.strokeRect(serverX[0], serverY[0], serverWidth[0], serverHeight[0]);
                     gc.setFill(Color.BLACK);
+                    if (count == oldCount){
 
-                    if (Domains.get(i).getText().length() > 10) {
+
+                    if (Domains.get(i).getText().length() > 8) {
                         String domain = Domains.get(i).getText();
                         domain = domain.replaceFirst("\\.", ".\n");
-                        gc.fillText(domain, serverX[0] + serverWidth[0] / 10, serverY[0] + serverHeight[0] / 3, serverWidth[0] / 10 * 9);
+                        gc.fillText((i+1)+": "+domain, serverX[0] + serverWidth[0] / 10, serverY[0] + serverHeight[0] / 3, serverWidth[0] / 10 * 9);
                     } else {
-                        gc.fillText(Domains.get(i).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
+                        gc.fillText((i+1)+": "+Domains.get(i).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
+                    }
+                    }
+                    else {
+                        if (Domains.get(i+1).getText().length() > 8) {
+                            String domain = Domains.get(i+1).getText();
+                            domain = domain.replaceFirst("\\.", ".\n");
+                            gc.fillText((i+2)+": "+domain, serverX[0] + serverWidth[0] / 10, serverY[0] + serverHeight[0] / 3, serverWidth[0] / 10 * 9);
+                        } else {
+                            gc.fillText((i+2)+": "+Domains.get(i+1).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
+                        }
                     }
 
 
+                }
+                int ServNumber;
+                if(count != oldCount) {
+                        ServNumber = count-rec.get(0)-rec.get(1);
+                    System.out.println("SN: "+Domains.get(ServNumber));
 
+                }
+                else {
+                    ServNumber = count;
                 }
                 serverX[0]= oldX;
                 serverY[0]= oldY;
@@ -567,13 +609,15 @@ public class Controller {
                 gc.strokeRect(serverX[0], serverY[0], serverWidth[0], serverHeight[0]);
                 gc.setFill(Color.BLACK);
 
-                if (Domains.get(count).getText().length() > 10) {
-                    String domain = Domains.get(count).getText();
+                if (Domains.get(ServNumber).getText().length() > 8) {
+                    String domain = Domains.get(ServNumber).getText();
                     domain = domain.replaceFirst("\\.", ".\n");
-                    gc.fillText(domain, serverX[0] + serverWidth[0] / 10, serverY[0] + serverHeight[0] / 3, serverWidth[0] / 10 * 9);
+                    gc.fillText((ServNumber+1)+": "+domain, serverX[0] + serverWidth[0] / 10, serverY[0] + serverHeight[0] / 3, serverWidth[0] / 10 * 9);
                 } else {
-                    gc.fillText(Domains.get(count).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
+                    gc.fillText((ServNumber+1)+": "+Domains.get(ServNumber).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
                 }
+
+
             }
 
             //onresize
@@ -688,19 +732,20 @@ public class Controller {
                     ServerList.get(i).setOpacity(1);
                 }
             }
-            else if(rec.get(1)>-1){
-            rec.set(1,rec.get(1)-1);//ВОТ ЗДЕСЬ ХЗ
-            if (flag == 0) {
-                count--;
-                flag=1;
-            }
-            else if(flag==1)
-                flag=0;
+            else if(rec.get(1)>0){
+                System.out.println("rec0: "+rec.get(1));
+//                if (i >= count - rec.get(0)-rec.get(1)) {
+//                for (int i = count-rec.get(0); i < count; i ++) {
 
-            GraphicsContext context = canvas.getGraphicsContext2D();
+                   int buffercount = count - rec.get(0) - rec.get(1);
+                    rec.set(1,rec.get(1)-1);//ВОТ ЗДЕСЬ ХЗ
+                     count= buffercount + rec.get(0)+rec.get(1);
+                System.out.println("cou: "+count);
+
+                GraphicsContext context = canvas.getGraphicsContext2D();
             drawing(context);
 
-            for (int i = 0; i < 9; i++)
+                for (int i = 0; i < 9; i++)
                 ServerList.get(i).setOpacity(0);
             for (int i = 0; i < count + 1; i++) {
                 ServerList.get(i).setOpacity(1);
@@ -737,7 +782,13 @@ public class Controller {
     }
 }
 /*
-*
+ *            canvas+- перерисовать добавить название
+ *           progressbar
+ *           добавить уровни
+ *           buttons+
+ *           перемотка+-
+ *           css+-
+ *           иконка+ :)
 *
 *
 */
