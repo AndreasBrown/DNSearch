@@ -21,7 +21,7 @@
             <Button id="play" layoutX="89.0" layoutY="6.0" mnemonicParsing="false" onAction="#Play" prefHeight="40.0" prefWidth="40.0" AnchorPane.leftAnchor="110.0" />
             <Button id="pause" layoutX="143.0" layoutY="6.0" mnemonicParsing="false" onAction="#Pause" prefHeight="40.0" prefWidth="40.0" AnchorPane.leftAnchor="160.0" />
             <Button id="stepforw" layoutX="194.0" layoutY="6.0" mnemonicParsing="false" onAction="#StepForward" prefHeight="40.0" prefWidth="40.0" AnchorPane.leftAnchor="210.0" />
-            <Button alignment="CENTER" layoutX="145.0" layoutY="1.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="114.0" text="Help" AnchorPane.rightAnchor="10.0" />
+            <Button alignment="CENTER" layoutX="145.0" layoutY="1.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="114.0" text="Помощь" AnchorPane.rightAnchor="10.0" />
             <Label layoutX="424.0" layoutY="15.0" text="0%" AnchorPane.rightAnchor="140.0" />
          </children>
          <effect>
@@ -40,8 +40,8 @@
                <children>
                   <AnchorPane fx:id="URL" maxHeight="1.7976931348623157E308" maxWidth="400.0" prefHeight="46.0" prefWidth="308.0" VBox.vgrow="ALWAYS">
                      <children>
-                        <TextField fx:id="field" prefHeight="31.0" prefWidth="110.0" promptText="Enter URL" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="155.0" AnchorPane.topAnchor="0.0" />
-                        <Button mnemonicParsing="false" onAction="#StartSearch" prefHeight="30.0" prefWidth="67.0" text="Search" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="0.0">
+                        <TextField fx:id="field" prefHeight="31.0" prefWidth="110.0" promptText="Введите URL" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="155.0" AnchorPane.topAnchor="0.0" />
+                        <Button mnemonicParsing="false" onAction="#StartSearch" prefHeight="30.0" prefWidth="67.0" text="Поиск" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="0.0">
                            <font>
                               <Font size="13.0" />
                            </font>
@@ -61,7 +61,7 @@
                <children>
                   <AnchorPane fx:id="anchacc" maxWidth="400.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="313.0" prefWidth="102.0" VBox.vgrow="ALWAYS">
                      <children>
-                        <Label alignment="CENTER" contentDisplay="RIGHT" nodeOrientation="LEFT_TO_RIGHT" text="Used servers" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="0.0">
+                        <Label alignment="CENTER" contentDisplay="RIGHT" nodeOrientation="LEFT_TO_RIGHT" text="Использованные серверы" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="0.0">
                            <padding>
                               <Insets left="20.0" />
                            </padding>
@@ -352,7 +352,7 @@
                               </TitledPane>
                            </panes>
                         </Accordion>
-                        <Label fx:id="Answer" alignment="CENTER" layoutX="56.0" layoutY="293.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="15.0" prefWidth="164.0" text="Status of search" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="56.0" />
+                        <Label fx:id="Answer" alignment="CENTER" layoutX="56.0" layoutY="293.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="15.0" prefWidth="164.0" text="Статус поиска" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="56.0" />
                      </children>
                      <VBox.margin>
                         <Insets top="5.0" />
