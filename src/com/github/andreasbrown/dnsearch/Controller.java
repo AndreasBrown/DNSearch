@@ -17,6 +17,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sun.plugin.cache.OldCacheEntry;
@@ -369,16 +370,37 @@ public class Controller implements Initializable {
         canvas.setHeight(VBOXh[0] / 1.2);
         canvas.setWidth(VBOXw[0] / 1.2);
         gc.setFont(new Font("Sans-Serif", servers.getHeight() / 55));
+            gc.setTextAlign(TextAlignment.CENTER);
         gc.setFill(Color.rgb(244, 244, 244));
         gc.fillRect(0, 0, VBOXw[0], VBOXh[0]);
+        double y = serverY[0];
+        for (int i = 0; i < levelsOfTree; i++){
 
+            gc.beginPath();
+            gc.moveTo(0, y + serverHeight[0]/2);
+            gc.lineTo(serverWidth[0]*2.5,y + serverHeight[0]/2);
+            gc.stroke();
+            gc.closePath();
+            gc.setFill(Color.BLACK);
+            gc.setTextAlign(TextAlignment.CENTER);
+            if (i == 0){
+                gc.fillText("Корневой уровень",0+serverWidth[0]*1.25,y+10,serverWidth[0]*2.5);
+            }
+            else if(i == 1){
+                gc.fillText("Верхний уровень",0+serverWidth[0]*1.25,y+10,serverWidth[0]*2.5);
+            }
+            else                gc.fillText(i +" уровень",0+serverWidth[0]*1.25,y+10,serverWidth[0]*2.5);
+
+            y+= 2*serverHeight[0];
+
+        }
         if (rec.size() == 0) {
             for (int i = 0; i < count; i++) {
                 if (i == 0) {
 
                     gc.strokeRect(serverX[0], serverY[0], serverWidth[0], serverHeight[0]);
                     gc.setFill(Color.BLACK);
-                    gc.fillText((i + 1) + ": " + Domains.get(i).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
+                     gc.fillText((i + 1) + ": " + Domains.get(i).getText(), serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0] / 2, serverWidth[0]);
                 } else {
 
                     gc.beginPath();
@@ -392,9 +414,9 @@ public class Controller implements Initializable {
                     if (Domains.get(i).getText().length() > 10) {
                         String domain = Domains.get(i).getText();
                         domain = domain.replaceFirst("\\.", ".\n");
-                        gc.fillText((i + 1) + ": " + domain, serverX[0] + serverWidth[0] / 10, serverY[0] + serverHeight[0] / 3, serverWidth[0] / 10 * 9);
+                                    gc.fillText((i + 1) + ": " + domain, serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0] / 3, serverWidth[0]);
                     } else {
-                        gc.fillText((i + 1) + ": " + Domains.get(i).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
+                                     gc.fillText((i + 1) + ": " + Domains.get(i).getText(), serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0] / 2, serverWidth[0] );
                     }
                 }
             }
@@ -407,7 +429,7 @@ public class Controller implements Initializable {
                     if (i == 0) {
                         gc.strokeRect(serverX[0], serverY[0], serverWidth[0], serverHeight[0]);
                         gc.setFill(Color.BLACK);
-                        gc.fillText((i + 1) + ": " + Domains.get(i).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
+                        gc.fillText((i + 1) + ": " + Domains.get(i).getText(), serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0] / 2, serverWidth[0]);
                     } else {
 
                         gc.beginPath();
@@ -423,9 +445,9 @@ public class Controller implements Initializable {
                         if (Domains.get(i).getText().length() > 10) {
                             String domain = Domains.get(i).getText();
                             domain = domain.replaceFirst("\\.", ".\n");
-                            gc.fillText((i + 1) + ": " + domain, serverX[0] + serverWidth[0] / 10, serverY[0] + serverHeight[0] / 3, serverWidth[0] / 10 * 9);
+                            gc.fillText((i + 1) + ": " + domain, serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0] / 3, serverWidth[0] );
                         } else {
-                            gc.fillText((i + 1) + ": " + Domains.get(i).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
+                            gc.fillText((i + 1) + ": " + Domains.get(i).getText(), serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0] / 2, serverWidth[0]);
                         }
 
                     }
@@ -450,17 +472,17 @@ public class Controller implements Initializable {
                     if (Domains.get(i).getText().length() > 10) {
                         String domain = Domains.get(i).getText();
                         domain = domain.replaceFirst("\\.", ".\n");
-                        gc.fillText((i + 1) + ": " + domain, serverX[0] + serverWidth[0] / 10, serverY[0] + serverHeight[0] / 3, serverWidth[0] / 10 * 9);
+                        gc.fillText((i + 1) + ": " + domain, serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0] / 3, serverWidth[0] );
                     } else {
-                        gc.fillText((i + 1) + ": " + Domains.get(i).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
+                        gc.fillText((i + 1) + ": " + Domains.get(i).getText(), serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0] / 2, serverWidth[0]);
                     }
                 } else {
                     if (Domains.get(i + 1).getText().length() > 10) {
                         String domain = Domains.get(i + 1).getText();
                         domain = domain.replaceFirst("\\.", ".\n");
-                        gc.fillText((i + 2) + ": " + domain, serverX[0] + serverWidth[0] / 10, serverY[0] + serverHeight[0] / 3, serverWidth[0] / 10 * 9);
+                        gc.fillText((i + 2) + ": " + domain, serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0] / 3, serverWidth[0] );
                     } else {
-                        gc.fillText((i + 2) + ": " + Domains.get(i + 1).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
+                        gc.fillText((i + 2) + ": " + Domains.get(i + 1).getText(), serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0] / 2, serverWidth[0]);
                     }
                 }
 
@@ -481,18 +503,18 @@ public class Controller implements Initializable {
                 if (Domains.get(count).getText().length() > 10) {
                     String domain = Domains.get(count).getText();
                     domain = domain.replaceFirst("\\.", ".\n");
-                    gc.fillText((count + 1) + ": " + domain, serverX[0] + serverWidth[0] / 10, serverY[0] + serverHeight[0] / 3, serverWidth[0] / 10 * 9);
+                    gc.fillText((count + 1) + ": " + domain, serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0] / 3, serverWidth[0]);
                 } else {
-                    gc.fillText((count + 1) + ": " + Domains.get(count).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
+                    gc.fillText((count + 1) + ": " + Domains.get(count).getText(), serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0] / 2, serverWidth[0]);
                 }
 
             } else {
                 if (Domains.get(count - branch).getText().length() > 10) {
                     String domain = Domains.get(count - branch).getText();
                     domain = domain.replaceFirst("\\.", ".\n");
-                    gc.fillText((count - branch + 1) + ": " + domain, serverX[0] + serverWidth[0] / 10, serverY[0] + serverHeight[0] / 3, serverWidth[0] / 10 * 9);
+                    gc.fillText((count - branch + 1) + ": " + domain, serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0] / 3, serverWidth[0]);
                 } else {
-                    gc.fillText((count - branch + 1) + ": " + Domains.get(count - branch).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
+                    gc.fillText((count - branch + 1) + ": " + Domains.get(count - branch).getText(), serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0] / 2, serverWidth[0]);
                 }
             }
         } else if (rec.size() == 2) {
@@ -503,7 +525,7 @@ public class Controller implements Initializable {
                     if (i == 0) {
                         gc.strokeRect(serverX[0], serverY[0], serverWidth[0], serverHeight[0]);
                         gc.setFill(Color.BLACK);
-                        gc.fillText((i + 1) + ": " + Domains.get(i).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
+                        gc.fillText((i + 1) + ": " + Domains.get(i).getText(), serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0] / 2, serverWidth[0]);
                     } else {
                         gc.beginPath();
                         gc.moveTo(serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0]);
@@ -518,17 +540,17 @@ public class Controller implements Initializable {
                             if (Domains.get(i).getText().length() > 8) {
                                 String domain = Domains.get(i).getText();
                                 domain = domain.replaceFirst("\\.", ".\n");
-                                gc.fillText((i + 1) + ": " + domain, serverX[0] + serverWidth[0] / 10, serverY[0] + serverHeight[0] / 3, serverWidth[0] / 10 * 9);
+                                gc.fillText((i + 1) + ": " + domain, serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0] / 3, serverWidth[0]);
                             } else {
-                                gc.fillText((i + 1) + ": " + Domains.get(i).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
+                                gc.fillText((i + 1) + ": " + Domains.get(i).getText(), serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0] / 2, serverWidth[0]);
                             }
                         } else {
                             if (Domains.get(i).getText().length() > 8) {
                                 String domain = Domains.get(i).getText();
                                 domain = domain.replaceFirst("\\.", ".\n");
-                                gc.fillText((i + 1) + ": " + domain, serverX[0] + serverWidth[0] / 10, serverY[0] + serverHeight[0] / 3, serverWidth[0] / 10 * 9);
+                                gc.fillText((i + 1) + ": " + domain, serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0] / 3, serverWidth[0]);
                             } else {
-                                gc.fillText((i + 1) + ": " + Domains.get(i).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
+                                gc.fillText((i + 1) + ": " + Domains.get(i).getText(), serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0] / 2, serverWidth[0]);
                             }
                         }
                     }
@@ -552,17 +574,17 @@ public class Controller implements Initializable {
                     if (Domains.get(i).getText().length() > 8) {
                         String domain = Domains.get(i).getText();
                         domain = domain.replaceFirst("\\.", ".\n");
-                        gc.fillText((i + 1) + ": " + domain, serverX[0] + serverWidth[0] / 10, serverY[0] + serverHeight[0] / 3, serverWidth[0] / 10 * 9);
+                        gc.fillText((i + 1) + ": " + domain, serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0] / 3, serverWidth[0]);
                     } else {
-                        gc.fillText((i + 1) + ": " + Domains.get(i).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
+                        gc.fillText((i + 1) + ": " + Domains.get(i).getText(), serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0] / 2, serverWidth[0]);
                     }
                 } else {
                     if (Domains.get(i + 1).getText().length() > 8) {
                         String domain = Domains.get(i + 1).getText();
                         domain = domain.replaceFirst("\\.", ".\n");
-                        gc.fillText((i + 2) + ": " + domain, serverX[0] + serverWidth[0] / 10, serverY[0] + serverHeight[0] / 3, serverWidth[0] / 10 * 9);
+                        gc.fillText((i + 2) + ": " + domain, serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0] / 3, serverWidth[0]);
                     } else {
-                        gc.fillText((i + 2) + ": " + Domains.get(i + 1).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
+                        gc.fillText((i + 2) + ": " + Domains.get(i + 1).getText(), serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0] / 2, serverWidth[0]);
                     }
                 }
             }
@@ -585,17 +607,17 @@ public class Controller implements Initializable {
                     if (Domains.get(i).getText().length() > 8) {
                         String domain = Domains.get(i).getText();
                         domain = domain.replaceFirst("\\.", ".\n");
-                        gc.fillText((i + 1) + ": " + domain, serverX[0] + serverWidth[0] / 10, serverY[0] + serverHeight[0] / 3, serverWidth[0] / 10 * 9);
+                        gc.fillText((i + 1) + ": " + domain, serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0] / 3, serverWidth[0]);
                     } else {
-                        gc.fillText((i + 1) + ": " + Domains.get(i).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
+                        gc.fillText((i + 1) + ": " + Domains.get(i).getText(), serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0] / 2, serverWidth[0] );
                     }
                 } else {
                     if (Domains.get(i + 1).getText().length() > 8) {
                         String domain = Domains.get(i + 1).getText();
                         domain = domain.replaceFirst("\\.", ".\n");
-                        gc.fillText((i + 2) + ": " + domain, serverX[0] + serverWidth[0] / 10, serverY[0] + serverHeight[0] / 3, serverWidth[0] / 10 * 9);
+                        gc.fillText((i + 2) + ": " + domain, serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0] / 3, serverWidth[0]);
                     } else {
-                        gc.fillText((i + 2) + ": " + Domains.get(i + 1).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
+                        gc.fillText((i + 2) + ": " + Domains.get(i + 1).getText(), serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0] / 2, serverWidth[0] );
                     }
                 }
 
@@ -622,9 +644,9 @@ public class Controller implements Initializable {
             if (Domains.get(ServNumber).getText().length() > 8) {
                 String domain = Domains.get(ServNumber).getText();
                 domain = domain.replaceFirst("\\.", ".\n");
-                gc.fillText((ServNumber + 1) + ": " + domain, serverX[0] + serverWidth[0] / 10, serverY[0] + serverHeight[0] / 3, serverWidth[0] / 10 * 9);
+                gc.fillText((ServNumber + 1) + ": " + domain, serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0] / 3, serverWidth[0] );
             } else {
-                gc.fillText((ServNumber + 1) + ": " + Domains.get(ServNumber).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
+                gc.fillText((ServNumber + 1) + ": " + Domains.get(ServNumber).getText(), serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0] / 2, serverWidth[0]);
             }
 
 
@@ -652,7 +674,7 @@ public class Controller implements Initializable {
 
                         gc.strokeRect(serverX[0], serverY[0], serverWidth[0], serverHeight[0]);
                         gc.setFill(Color.BLACK);
-                        gc.fillText((i + 1) + ": " + Domains.get(i).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
+                        gc.fillText((i + 1) + ": " + Domains.get(i).getText(), serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0] / 2, serverWidth[0]);
                     } else {
 
                         gc.beginPath();
@@ -666,9 +688,9 @@ public class Controller implements Initializable {
                         if (Domains.get(i).getText().length() > 10) {
                             String domain = Domains.get(i).getText();
                             domain = domain.replaceFirst("\\.", ".\n");
-                            gc.fillText((i + 1) + ": " + domain, serverX[0] + serverWidth[0] / 10, serverY[0] + serverHeight[0] / 3, serverWidth[0] / 10 * 9);
+                            gc.fillText((i + 1) + ": " + domain, serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0] / 3, serverWidth[0]);
                         } else {
-                            gc.fillText((i + 1) + ": " + Domains.get(i).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
+                            gc.fillText((i + 1) + ": " + Domains.get(i).getText(), serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0] / 2, serverWidth[0]);
                         }
                     }
                 }
@@ -681,7 +703,7 @@ public class Controller implements Initializable {
                         if (i == 0) {
                             gc.strokeRect(serverX[0], serverY[0], serverWidth[0], serverHeight[0]);
                             gc.setFill(Color.BLACK);
-                            gc.fillText((i + 1) + ": " + Domains.get(i).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
+                            gc.fillText((i + 1) + ": " + Domains.get(i).getText(), serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0] / 2, serverWidth[0]);
                         } else {
 
                             gc.beginPath();
@@ -697,9 +719,9 @@ public class Controller implements Initializable {
                             if (Domains.get(i).getText().length() > 10) {
                                 String domain = Domains.get(i).getText();
                                 domain = domain.replaceFirst("\\.", ".\n");
-                                gc.fillText((i + 1) + ": " + domain, serverX[0] + serverWidth[0] / 10, serverY[0] + serverHeight[0] / 3, serverWidth[0] / 10 * 9);
+                                gc.fillText((i + 1) + ": " + domain, serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0] / 3, serverWidth[0]);
                             } else {
-                                gc.fillText((i + 1) + ": " + Domains.get(i).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
+                                gc.fillText((i + 1) + ": " + Domains.get(i).getText(), serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0] / 2, serverWidth[0]);
                             }
 
                         }
@@ -724,17 +746,17 @@ public class Controller implements Initializable {
                         if (Domains.get(i).getText().length() > 10) {
                             String domain = Domains.get(i).getText();
                             domain = domain.replaceFirst("\\.", ".\n");
-                            gc.fillText((i + 1) + ": " + domain, serverX[0] + serverWidth[0] / 10, serverY[0] + serverHeight[0] / 3, serverWidth[0] / 10 * 9);
+                            gc.fillText((i + 1) + ": " + domain, serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0] / 3, serverWidth[0]);
                         } else {
-                            gc.fillText((i + 1) + ": " + Domains.get(i).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
+                            gc.fillText((i + 1) + ": " + Domains.get(i).getText(), serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0] / 2, serverWidth[0]);
                         }
                     } else {
                         if (Domains.get(i + 1).getText().length() > 10) {
                             String domain = Domains.get(i + 1).getText();
                             domain = domain.replaceFirst("\\.", ".\n");
-                            gc.fillText((i + 2) + ": " + domain, serverX[0] + serverWidth[0] / 10, serverY[0] + serverHeight[0] / 3, serverWidth[0] / 10 * 9);
+                            gc.fillText((i + 2) + ": " + domain, serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0] / 3, serverWidth[0]);
                         } else {
-                            gc.fillText((i + 2) + ": " + Domains.get(i + 1).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
+                            gc.fillText((i + 2) + ": " + Domains.get(i + 1).getText(), serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0] / 2, serverWidth[0]);
                         }
                     }
 
@@ -755,18 +777,18 @@ public class Controller implements Initializable {
                     if (Domains.get(count).getText().length() > 10) {
                         String domain = Domains.get(count).getText();
                         domain = domain.replaceFirst("\\.", ".\n");
-                        gc.fillText((count + 1) + ": " + domain, serverX[0] + serverWidth[0] / 10, serverY[0] + serverHeight[0] / 3, serverWidth[0] / 10 * 9);
+                        gc.fillText((count + 1) + ": " + domain, serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0] / 3, serverWidth[0]);
                     } else {
-                        gc.fillText((count + 1) + ": " + Domains.get(count).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
+                        gc.fillText((count + 1) + ": " + Domains.get(count).getText(), serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0] / 2, serverWidth[0]);
                     }
 
                 } else {
                     if (Domains.get(count - branch).getText().length() > 10) {
                         String domain = Domains.get(count - branch).getText();
                         domain = domain.replaceFirst("\\.", ".\n");
-                        gc.fillText((count - branch + 1) + ": " + domain, serverX[0] + serverWidth[0] / 10, serverY[0] + serverHeight[0] / 3, serverWidth[0] / 10 * 9);
+                        gc.fillText((count - branch + 1) + ": " + domain, serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0] / 3, serverWidth[0]);
                     } else {
-                        gc.fillText((count - branch + 1) + ": " + Domains.get(count - branch).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
+                        gc.fillText((count - branch + 1) + ": " + Domains.get(count - branch).getText(), serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0] / 2, serverWidth[0]);
                     }
                 }
             } else if (rec.size() == 2) {
@@ -777,7 +799,7 @@ public class Controller implements Initializable {
                         if (i == 0) {
                             gc.strokeRect(serverX[0], serverY[0], serverWidth[0], serverHeight[0]);
                             gc.setFill(Color.BLACK);
-                            gc.fillText((i + 1) + ": " + Domains.get(i).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
+                            gc.fillText((i + 1) + ": " + Domains.get(i).getText(), serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0] / 2, serverWidth[0] /2);
                         } else {
                             gc.beginPath();
                             gc.moveTo(serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0]);
@@ -792,17 +814,17 @@ public class Controller implements Initializable {
                                 if (Domains.get(i).getText().length() > 8) {
                                     String domain = Domains.get(i).getText();
                                     domain = domain.replaceFirst("\\.", ".\n");
-                                    gc.fillText((i + 1) + ": " + domain, serverX[0] + serverWidth[0] / 10, serverY[0] + serverHeight[0] / 3, serverWidth[0] / 10 * 9);
+                                    gc.fillText((i + 1) + ": " + domain, serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0] / 3, serverWidth[0]);
                                 } else {
-                                    gc.fillText((i + 1) + ": " + Domains.get(i).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
+                                    gc.fillText((i + 1) + ": " + Domains.get(i).getText(), serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0] / 2, serverWidth[0]);
                                 }
                             } else {
                                 if (Domains.get(i).getText().length() > 8) {
                                     String domain = Domains.get(i).getText();
                                     domain = domain.replaceFirst("\\.", ".\n");
-                                    gc.fillText((i + 1) + ": " + domain, serverX[0] + serverWidth[0] / 10, serverY[0] + serverHeight[0] / 3, serverWidth[0] / 10 * 9);
+                                    gc.fillText((i + 1) + ": " + domain, serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0] / 3, serverWidth[0]);
                                 } else {
-                                    gc.fillText((i + 1) + ": " + Domains.get(i).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
+                                    gc.fillText((i + 1) + ": " + Domains.get(i).getText(), serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0] / 2, serverWidth[0]);
                                 }
                             }
                         }
@@ -826,17 +848,17 @@ public class Controller implements Initializable {
                         if (Domains.get(i).getText().length() > 8) {
                             String domain = Domains.get(i).getText();
                             domain = domain.replaceFirst("\\.", ".\n");
-                            gc.fillText((i + 1) + ": " + domain, serverX[0] + serverWidth[0] / 10, serverY[0] + serverHeight[0] / 3, serverWidth[0] / 10 * 9);
+                            gc.fillText((i + 1) + ": " + domain, serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0] / 3, serverWidth[0] );
                         } else {
-                            gc.fillText((i + 1) + ": " + Domains.get(i).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
+                            gc.fillText((i + 1) + ": " + Domains.get(i).getText(), serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0] / 2, serverWidth[0]);
                         }
                     } else {
                         if (Domains.get(i + 1).getText().length() > 8) {
                             String domain = Domains.get(i + 1).getText();
                             domain = domain.replaceFirst("\\.", ".\n");
-                            gc.fillText((i + 2) + ": " + domain, serverX[0] + serverWidth[0] / 10, serverY[0] + serverHeight[0] / 3, serverWidth[0] / 10 * 9);
+                            gc.fillText((i + 2) + ": " + domain, serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0] / 3, serverWidth[0] );
                         } else {
-                            gc.fillText((i + 2) + ": " + Domains.get(i + 1).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
+                            gc.fillText((i + 2) + ": " + Domains.get(i + 1).getText(), serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0] / 2, serverWidth[0] );
                         }
                     }
                 }
@@ -859,17 +881,17 @@ public class Controller implements Initializable {
                         if (Domains.get(i).getText().length() > 8) {
                             String domain = Domains.get(i).getText();
                             domain = domain.replaceFirst("\\.", ".\n");
-                            gc.fillText((i + 1) + ": " + domain, serverX[0] + serverWidth[0] / 10, serverY[0] + serverHeight[0] / 3, serverWidth[0] / 10 * 9);
+                            gc.fillText((i + 1) + ": " + domain, serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0] / 3, serverWidth[0]);
                         } else {
-                            gc.fillText((i + 1) + ": " + Domains.get(i).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
+                            gc.fillText((i + 1) + ": " + Domains.get(i).getText(), serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0] / 2, serverWidth[0] );
                         }
                     } else {
                         if (Domains.get(i + 1).getText().length() > 8) {
                             String domain = Domains.get(i + 1).getText();
                             domain = domain.replaceFirst("\\.", ".\n");
-                            gc.fillText((i + 2) + ": " + domain, serverX[0] + serverWidth[0] / 10, serverY[0] + serverHeight[0] / 3, serverWidth[0] / 10 * 9);
+                            gc.fillText((i + 2) + ": " + domain, serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0] / 3, serverWidth[0] );
                         } else {
-                            gc.fillText((i + 2) + ": " + Domains.get(i + 1).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
+                            gc.fillText((i + 2) + ": " + Domains.get(i + 1).getText(), serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0] / 2, serverWidth[0]);
                         }
                     }
 
@@ -896,9 +918,9 @@ public class Controller implements Initializable {
                 if (Domains.get(ServNumber).getText().length() > 8) {
                     String domain = Domains.get(ServNumber).getText();
                     domain = domain.replaceFirst("\\.", ".\n");
-                    gc.fillText((ServNumber + 1) + ": " + domain, serverX[0] + serverWidth[0] / 10, serverY[0] + serverHeight[0] / 3, serverWidth[0] / 10 * 9);
+                    gc.fillText((ServNumber + 1) + ": " + domain, serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0] / 3, serverWidth[0]);
                 } else {
-                    gc.fillText((ServNumber + 1) + ": " + Domains.get(ServNumber).getText(), serverX[0] + serverWidth[0] / 4, serverY[0] + serverHeight[0] / 2, serverWidth[0] / 4 * 3);
+                    gc.fillText((ServNumber + 1) + ": " + Domains.get(ServNumber).getText(), serverX[0] + serverWidth[0] / 2, serverY[0] + serverHeight[0] / 2, serverWidth[0] );
                 }
 
 
@@ -1123,4 +1145,5 @@ public class Controller implements Initializable {
 
 
 }
+
 
