@@ -1,5 +1,7 @@
 package com.github.andreasbrown.dnsearch;
 
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.TitledPane;
 import org.xbill.DNS.*;
@@ -27,9 +29,9 @@ public class DNSearch {
     public static int stop = 0;
 
 
-
     public static String Search(String host) throws TextParseException, UnknownHostException {
         try {
+
 
             int NotRecursion = 0;
             Resolver res;
@@ -171,11 +173,27 @@ public class DNSearch {
             count = 1;
             branch = 0;
             OldName = host;
+            List<String> roots = new ArrayList<>();
+            roots.add("a.root-servers.net/198.41.0.4");
+            roots.add("b.root-servers.net/192.228.79.201");
+            roots.add("c.root-servers.net/192.33.4.12");
+            roots.add("d.root-servers.net/199.7.91.13");
+            roots.add("e.root-servers.net/192.203.230.10");
+            roots.add("f.root-servers.net/192.5.5.241");
+            roots.add("g.root-servers.net/192.112.36.4");
+            roots.add("h.root-servers.net/198.97.190.53");
+            roots.add("i.root-servers.net/192.36.148.17");
+            roots.add("j.root-servers.net/192.58.128.30");
+            roots.add("k.root-servers.net/193.0.14.129");
+            roots.add("l.root-servers.net/199.7.83.42");
+            roots.add("m.root-servers.net/202.12.27.33");
+            Random randRoot = new Random();
+
             InetAddress inetAddress = InetAddress.getByName("google.com");
             for (int i = 0; i < 3; i++) {
                 if (inetAddress.isReachable(1000)) {
                     domains[count]="Root";
-                    Servers.add("l.root-servers.net/199.7.83.42");
+                    Servers.add(roots.get(randRoot.nextInt(12)));
                     QueryTypes[count] = "root";
                     ttl[count] = 0;
                     Search(OldName);

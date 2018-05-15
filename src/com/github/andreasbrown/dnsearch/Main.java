@@ -10,6 +10,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
+import java.awt.*;
 
 
 public class Main extends Application {
@@ -17,8 +18,12 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("gui.fxml"));
+        Dimension sSize = Toolkit.getDefaultToolkit ().getScreenSize ();
+
+
         Scene scene = new Scene(root, 640, 480);
         scene.getStylesheets().add((getClass().getResource("style.css")).toExternalForm());
+        primaryStage.setMaximized(true);
         primaryStage.setTitle("VisualDNSearch");
         primaryStage.setMinHeight(480);
         primaryStage.setMinWidth(640);

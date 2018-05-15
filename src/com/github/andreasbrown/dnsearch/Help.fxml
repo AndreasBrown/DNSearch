@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="480.0" minWidth="640.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.andreasbrown.dnsearch.Controller">
+   <top>
+      <Label text="Помощь" BorderPane.alignment="CENTER" />
+   </top>
+   <bottom>
+      <Button fx:id="btnhelp" mnemonicParsing="false" onAction="#cancel" text="Ok" BorderPane.alignment="TOP_CENTER">
+         <BorderPane.margin>
+            <Insets bottom="10.0" />
+         </BorderPane.margin>
+      </Button>
+   </bottom>
+   <center>
+      <AnchorPane prefHeight="321.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="helptext" alignment="CENTER" layoutY="6.0" prefHeight="312.0" prefWidth="597.0" text="Чтобы начать использовать программу необходимо ввести URL-адреса любого существующего домена (кроме кириллических URL-адресов) и нажать кнопку &quot;Поиск&quot;. Если у вас возникли проблемы в работе программы, проверьте подключение к интеренету, проверьте корректность вводимого URL-адреса, допускается использование только латинских символов любого регистра и точек, проверьте строку на наличие пробелов в начале или в конце строки. Возможна ситуация когда домен существует, но не имеет хоста, поэтому следует уточнять о наличии хоста у домена. Для подробной демонстрации построения дерева в панеле инструментов находятся кнопки пошагового режима: &quot;шаг назад&quot;, &quot;стоп&quot;, &quot;пауза&quot;, &quot;старт&quot;, &quot;шаг вперёд&quot; ( в таком же порядке слева направо)." wrapText="true" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="6.0">
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+               <font>
+                  <Font size="18.0" />
+               </font></Label>
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>

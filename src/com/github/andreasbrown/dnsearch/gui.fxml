@@ -11,7 +11,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.andreasbrown.dnsearch.Controller">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="480.0" minWidth="640.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.andreasbrown.dnsearch.Controller">
    <children>
       <AnchorPane fx:id="tool" prefHeight="53.0" prefWidth="600.0" stylesheets="@style.css">
          <children>
@@ -21,8 +21,8 @@
             <Button id="play" layoutX="89.0" layoutY="6.0" mnemonicParsing="false" onAction="#Play" prefHeight="40.0" prefWidth="40.0" AnchorPane.leftAnchor="110.0" />
             <Button id="pause" layoutX="143.0" layoutY="6.0" mnemonicParsing="false" onAction="#Pause" prefHeight="40.0" prefWidth="40.0" AnchorPane.leftAnchor="160.0" />
             <Button id="stepforw" layoutX="194.0" layoutY="6.0" mnemonicParsing="false" onAction="#StepForward" prefHeight="40.0" prefWidth="40.0" AnchorPane.leftAnchor="210.0" />
-            <Button alignment="CENTER" layoutX="145.0" layoutY="1.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="114.0" text="Помощь" AnchorPane.rightAnchor="10.0" />
-            <Label layoutX="424.0" layoutY="15.0" text="0%" AnchorPane.rightAnchor="140.0" />
+            <Button alignment="CENTER" layoutX="145.0" layoutY="1.0" mnemonicParsing="false" onAction="#Help" prefHeight="49.0" prefWidth="114.0" text="Помощь" AnchorPane.rightAnchor="10.0" />
+            <Label fx:id="percent" layoutX="444.0" layoutY="16.0" text="0%" AnchorPane.rightAnchor="128.0" />
          </children>
          <effect>
             <InnerShadow blurType="GAUSSIAN" color="#0000004e" height="35.77" radius="8.4425" width="0.0" />
