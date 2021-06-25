@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="description" content="Это моя первая страница">
+        <meta name="author" content="Aleksey">
+        <meta name="robots" content="all">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Алексей Илдаркин - Веб-разработчик</title>
+        <link rel="stylesheet" href="css/reset.css">
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/font-awesome.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+        <script src="js/main.js"></script>
+    </head>
+    <body onload="myFunction()">
+        <div id="loader"></div>
+        <div style="display: none;" id="myDiv" class="animate-bottom">
+        <header>
+            <nav>
+                <div class="logo">Алексей Илдаркин</div>
+                <div class="menu">
+                    <ul>
+                        <li><a href="#">Обо мне</a></li>
+                        <li><a href="#">Услуги</a></li>
+                        <li><a href="#">Кейсы</a></li>
+                        <li><a href="#">Прайс</a></li>
+                        <li><a href="#">Отзывы</a></li>
+                        <li><a href="#">Контакты</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <main>
+            <section class="main">
+                <div class="title__container">
+                    <h1>Привет <br> Я Алексей Илдаркин</h1>
+                    <h4>Фулл стек веб-разработчик</h4>
+                    <input type="button" value="Обо мне">
+                    <input type="button" value="Мои работы">
+                </div>
+            </section>
+            
+            <div class="about">
+                <h2>Обо мне</h2>
+                <div class="border_top"></div>
+                <div class="image_boy">
+                    <img src="img/boy.png" alt="Какой-то парень">
+                </div>
+                <div class="about_text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis nulla ipsam, iure fuga cum alias, nesciunt nam, debitis sed expedita vero. Beatae eos, maiores modi sunt ipsa et?</div>
+                <br>
+                <div class="about_text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis nulla ipsam, iure fuga cum alias, nesciunt nam, debitis sed expedita vero. Beatae eos, maiores modi sunt ipsa et?</div>
+                <br>
+                <input type="submit" value="Скачать резюме">
+            </div>
+            
+            
+            <div class="know">
+                <h2>Что я умею</h2>
+                <div class="border_top"></div>
+                <div class="container">
+                    <div class="sign_one">
+                        <img src="img/laptop.png" alt="image laptop">
+                        <div class="sign">Веб-дизайн</div>
+                        <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque commodi impedit, ipsa sed odio dolorem!</span>
+                    </div>
+                    <div class="sign_two">
+                        <img src="img/code.png" alt="image code sign">
+                        <div class="sign">Разработка</div>
+                        <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque commodi impedit, ipsa sed odio dolorem!</span>
+                    </div>
+                    <div class="sign_three">
+                        <img src="img/rocket.png" alt="image rocket">
+                        <div class="sign">СЕО-Оптимизация</div>
+                        <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque commodi impedit, ipsa sed odio dolorem!</span>
+                    </div>
+                    <div class="sign_four">
+                        <img src="img/gramophone.png" alt="image gramophone">
+                        <div class="sign">Маркетинг</div>
+                        <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque commodi impedit, ipsa sed odio dolorem!</span>
+                    </div>
+                </div>
+            </div>
+            <div class="case">
+                <h2>Кейсы</h2>
+                <div class="border_top"></div>
+                <div class="container_case">
+                    <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi aperiam ea mollitia voluptatum dignissimos itaque ut sed alias.</span>
+                    <img src="img/photo.png" alt="Какое-то фото">
+                    <div class="container_bottom">
+                        <div class="container_left">
+                            <h3>Client:</h3>
+                            <span>Какая-то компания</span>
+                            <br>
+                            <h3>Website:</h3>
+                            <span>http://www.somedomain.com</span>
+                        </div>
+                        <div class="container_right">
+                            <h3>Название проекта</h3>
+                            <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Totam natus modi, quam cupiditate iure est illo ab voluptas animi vero dolore at, iusto atque laboriosam quos eligendi! Est autem rerum adipisci dolorem architecto atque aspernatur sit repellendus nobis commodi quos accusamus voluptates, quasi blanditiis, incidunt molestiae magni. Consectetur, expedita numquam!</span>
+                        </div>
+                        <div class="container_button">
+                            <input type="submit" value="Visit live site">
+                        </div>
+                    </div>
+                </div>
+                <div class="price">
+                    <h3>Расчет стоимости</h3>
+                    <div class="container_price">
+                        <div class="type_site">
+                            <h4>Тип сайта</h4>
+                            <select name="list1" id="list">
+                                <option selected disabled>Выберете пункт...</option>
+                                <option value="opt1">Option 1</option>
+                                <option value="opt2">Option 2</option>
+                                <option value="opt3">Option 3</option>
+                            </select>
+                        </div>
+                        <div class="design">
+                            <h4>Дизайн</h4>
+                            <select name="list2" id="list">
+                                <option selected disabled>Выберете пункт...</option>
+                                <option value="opt1">Option 1</option>
+                                <option value="opt2">Option 2</option>
+                                <option value="opt3">Option 3</option>
+                            </select>
+                        </div>
+                        <div class="adaptability">
+                            <h4>Адаптивность</h4>
+                            <select name="list3" id="list">
+                                <option selected disabled>Выберете пункт...</option>
+                                <option value="opt1">Option 1</option>
+                                <option value="opt2">Option 2</option>
+                                <option value="opt3">Option 3</option>
+                            </select>
+                        </div>
+                        <div class="border_bottom"></div>
+                        <div class="example_price">
+                            <div class="example_deadline">
+                                <div class="example_text">Сроки</div>
+                                <div class="example_number">0</div>
+                            </div>
+                            <br>
+                            <br>
+                            <div class="example_cost">
+                                <div class="example_text">Стоимость</div>
+                                <div class="example_number">0</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="statistics">
+                <h2>Немного статистики</h2>
+                <div class="border_top"></div>
+                <div class="container_s">
+                    <div class="sign_s_one">
+                        <img src="img/smile.png" alt="image smile">
+                        <div class="sign_number"><b>120</b></div>
+                        <h4>Счастливых клиентов</h4>
+                    </div>
+                    <div class="sign_s_two">
+                        <img src="img/code-s.png" alt="image code sign">
+                        <div class="sign_number"><b>4,600</b></div>
+                        <h4>Часов работы</h4>
+                    </div>
+                    <div class="sign_s_three">
+                        <img src="img/tick.png" alt="image tick">
+                        <div class="sign_number"><b>340</b></div>
+                        <h4>Проектов завершено</h4>
+                    </div>
+                    <div class="sign_s_four">
+                        <img src="img/trophy.png" alt="image trophy">
+                        <div class="sign_number"><b>23</b></div>
+                        <h4>Наград получено</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="reviews">
+                <h2>Отзывы</h2>
+                <div class="border_top"></div>
+                <div class="animate__animated animate__fadeInLeftBig animate__delay-2s">
+                    <img src="img/boy_2.png" alt="Какой-то парень">
+                </div>
+                <div class="container_reviews animate__animated animate__fadeInLeftBig animate__delay-2s">
+                    <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laboriosam, possimus quasi aspernatur! Nesciunt veritatis maxime laborum mollitia voluptas facilis facere reprehenderit accusamus iste, quod quibusdam ratione temporibus quos ullam quis minus.</span>
+                    <br>
+                    <div class="boy_2_r">Михаил, Ген директор ПАО"Газпром".</div>
+                </div>
+            </div>
+            <div class="contacts">
+                <h2>Мои контакты</h2>
+                <div class="border_top"></div>
+                <div class="container_cont">
+                    <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestiae labore saepe, illo id quos laborum.</span>
+                    <div class="cont_img animate__animated animate__fadeInDown">
+                        <div class="img_c">
+                            <img src="img/geo.png" alt="image geo">
+                            <div class="geo">Санкт-Петербург</div>
+                            <div>Невский проспект 11</div>
+                        </div>
+                        <div class="img_c">
+                            <img src="img/mms.png" alt="image mms">
+                            <div class="mms">info@companyname.com</div>
+                        </div>
+                        <div class="img_c">
+                            <img src="img/phone.png" alt="image phone">
+                            <div class="phone">+7 999 999-99-99</div>
+                        </div>
+                    </div>
+                    <h3 class="animate__animated animate__shakeX">Оставьте мне сообщение</h3>
+                    <input type="text" placeholder="Имя" custom_data="name">
+                    <input type="email" placeholder="Email" custom_data="mail">
+                    <textarea name="name1" id="1" cols="30" rows="10" placeholder="Сообщение"></textarea>
+                    <input type="submit" value="Отправить" custom_data="buttom">
+                </div>
+            </div>
+            <div class="map">
+                <img src="img/map.jpg" alt="image map">
+            </div>
+            <footer>
+                <span>Copyright 2021 Алексей Илдаркин. Design by Web</span>
+            </footer>
+        </main>
+        </div>
+    </body>
+</html>
